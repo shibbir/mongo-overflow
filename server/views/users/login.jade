@@ -1,0 +1,26 @@
+extends ../layouts/master
+block content
+
+    div.ui.grid
+        div.six.wide.column(ng-controller="RegistrationCtrl")
+            form.ui.form(name="registrationForm", novalidate)
+
+                h4.ui.dividing.header Register for a free account
+
+                div.field.required
+                    label Email
+                    div.ui.icon.input
+                        input(type="email", placeholder="Email", name="email", ng-model="user.email", required)
+                        i.mail.icon
+                    div.ui.red.pointing.prompt.label.transition.visible(ng-if="registrationForm.submitted && registrationForm.email.$invalid")
+                        span Please enter your email address
+
+                div.field.required
+                    label Password
+                    div.ui.icon.input
+                        input(type="password", placeholder="Password", name="password", ng-model="user.password", required)
+                        i.privacy.icon
+                    div.ui.red.pointing.prompt.label.transition.visible(ng-if="registrationForm.submitted && registrationForm.password.$invalid")
+                        span Please enter your password
+
+                div.ui.submit.button(ng-click="register(user)") Register

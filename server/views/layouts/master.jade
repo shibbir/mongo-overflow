@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        title= "Mongo Overflow"
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='icon', href='/img/favicon.ico', type='image/x-icon')
+
+        link(rel='stylesheet', href='/assets/bower_components/semantic-ui/dist/semantic.css')
+        link(rel='stylesheet', href='/assets/css/site.css')
+    body(ng-app="mongoOverflow", ng-strict-di)
+        div(ng-controller="BaseCtrl")
+            include ../common/topBar
+            div.container
+                block content
+
+        script(src='/assets/bower_components/jquery/dist/jquery.js')
+        script(src='/assets/bower_components/angular/angular.js')
+        script(src='/assets/bower_components/ng-file-upload/angular-file-upload.js')
+        script(src='/assets/bower_components/socket.io-client/socket.io.js')
+        script(src='/assets/bower_components/toastr/toastr.js')
+        script(src='/assets/bower_components/lodash/lodash.js')
+        script(src='/assets/bower_components/semantic-ui/dist/semantic.js')
+
+        script(src='/app.js')
+
+        script(src='/services/configService.js')
+        script(src='/services/apiService.js')
+        script(src='/services/notifierService.js')
+
+        script(src='/controllers/baseCtrl.js')
+        script(src='/controllers/account/registrationCtrl.js')
