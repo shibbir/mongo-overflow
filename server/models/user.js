@@ -1,4 +1,4 @@
-﻿﻿var mongoose = require("mongoose"),
+﻿var mongoose = require("mongoose"),
     bcrypt   = require("bcrypt-nodejs"),
     Schema   = mongoose.Schema;
 
@@ -7,11 +7,19 @@ var UserSchema = Schema({
         type: String,
         unique: true,
         required: true,
-        match: [/.+\@.+\..+/, "Please enter a valid email"]
+        match: [/.+\@.+\..+/]
     },
-    name: {
-        type: String
-    },
+    avatar: String,
+    name: String,
+    location: String,
+    reputations: [{
+        type: Schema.Types.ObjectId,
+        ref: "Reputation"
+    }],
+    badges: [{
+        type: Schema.Types.ObjectId,
+        ref: "Badge"
+    }],
     password: String,
     createdDate: {
         type: Date,
