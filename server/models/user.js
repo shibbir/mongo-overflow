@@ -9,6 +9,17 @@ var UserSchema = Schema({
         required: true,
         match: [/.+\@.+\..+/]
     },
+    avatar: String,
+    name: String,
+    location: String,
+    reputations: [{
+        type: Schema.Types.ObjectId,
+        ref: "Reputation"
+    }],
+    badges: [{
+        type: Schema.Types.ObjectId,
+        ref: "Badge"
+    }],
     password: String,
     avatar: String,
     name: String,
