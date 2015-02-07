@@ -4,7 +4,8 @@ var mongoose = require("mongoose"),
 var TagSchema = Schema({
     name: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     description: String,
     followers: [{

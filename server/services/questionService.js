@@ -7,8 +7,8 @@ var getQuestions = function(req, res) {
         size = req.query.size ? parseInt(req.query.size) : 30,
         skip = page > 0 ? ((page - 1) * size) : 0;
 
-    var fields = "title answers views tags";
-    questionRepository.findAll(skip, size, fields, function(err, docs) {
+    var fields = "creator title answers views tags";
+    questionRepository.findAll(skip, size, fields, "tags", function(err, docs) {
 
         // votes
         // last activity

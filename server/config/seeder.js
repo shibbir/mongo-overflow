@@ -45,7 +45,8 @@ var tagSeeder = function(callback) {
     async.each(array, function(idx, asyncCallback) {
         new Tag({
             name: faker.Internet.userName(),
-            description: faker.Lorem.sentences(2)
+            description: faker.Lorem.sentences(2),
+            followers: randomSelector(users)
         }).save(function(err, doc) {
             tags.push(doc);
             asyncCallback();

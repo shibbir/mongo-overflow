@@ -1,1 +1,42 @@
-<div>Home Feeds</div>
+<div>
+    <div ng-repeat="question in questions" class="ui grid dividing">
+        <div class="three wide column">
+            <div class="ui grid">
+                <div class="four wide column">
+                    <div class="votes-summary">
+                        <div ng-bind="question.answers.length"></div>
+                        <div>Votes</div>
+                    </div>
+                </div>
+                <div class="five wide column" style="padding: 15px 10px;">
+                    <div class="answers-summary">
+                        <div ng-bind="question.answers.length"></div>
+                        <div>Answers</div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="views-summary">
+                        <div ng-bind="question.views.length"></div>
+                        <div>Views</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="thirteen wide column">
+            <div class="ui grid">
+                <div class="sixteen wide column question-title-container">
+                    <a ng-href="/questions/{{question._id}}">{{ question.title }}</a>
+                </div>
+                <div class="ten wide column tag-container">
+                    <span ng-repeat="tag in question.tags">
+                        <a class="post-tag" ng-href="/tags/{{tag._id}}">{{ tag.name }}</a>
+                    </span>
+                </div>
+                <div class="six wide column"></div>
+            </div>
+        </div>
+        <div>
+            <hr />
+        </div>
+    </div>
+</div>

@@ -21,17 +21,6 @@ var UserSchema = Schema({
         ref: "Badge"
     }],
     password: String,
-    avatar: String,
-    name: String,
-    location: String,
-    reputations: [{
-        type: Schema.Types.ObjectId,
-        ref: "Reputation"
-    }],
-    badges: [{
-        type: Schema.Types.ObjectId,
-        ref: "Badge"
-    }],
     role: {
         type: String,
         enum: ["basic", "moderator", "admin"],
