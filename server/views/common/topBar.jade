@@ -19,9 +19,14 @@ div.ui.fixed.menu
             i.translate.icon
             span Unanswered
         div.right.menu
-            a.item(href="/users/login")
-                i.sign.in.icon
-                span Login
+            if(!user.name)
+                a.item(href="/users/login")
+                    i.sign.in.icon
+                    span Login
+            else
+                a.item(href="/users/logout")
+                    i.sign.out.icon
+                    span Logout
             div.item
                 div.ui.transparent.icon.input
                     input(placeholder="Search...", type="text")

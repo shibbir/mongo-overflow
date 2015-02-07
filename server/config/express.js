@@ -1,8 +1,10 @@
-var express    = require("express"),
-    path       = require("path"),
+var path       = require("path"),
+    flash      = require("connect-flash"),
+    express    = require("express"),
+    session    = require("express-session"),
     bodyParser = require("body-parser");
 
-module.exports = function() {
+module.exports = function(passport) {
     "use strict";
 
     var app = express();
@@ -12,6 +14,11 @@ module.exports = function() {
         extended: true
     }));
     app.use(bodyParser.json());
+
+    app.use(session({ secret: "app-secret-key", resave: true, saveUninitialized: true }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(flash());
 
     app.set("view engine", "jade");
     app.set("port", process.env.PORT || 7070);

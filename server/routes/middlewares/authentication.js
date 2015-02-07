@@ -13,5 +13,6 @@ exports.requiresLogin = function(req, res, next) {
     if(!req.isAuthenticated()) {
         return res.redirect("/login");
     }
+    res.locals.user = req.user;
     next();
 };

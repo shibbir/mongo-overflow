@@ -27,6 +27,7 @@
                 <div class="sixteen wide column question-title-container">
                     <a ng-href="/questions/{{question._id}}">{{ question.title }}</a>
                 </div>
+                <div class="sixteen wide column question-description-container" ng-bind="question.description"></div>
                 <div class="ten wide column tag-container">
                     <span ng-repeat="tag in question.tags">
                         <a class="post-tag" ng-href="/tags/{{tag._id}}">{{ tag.name }}</a>

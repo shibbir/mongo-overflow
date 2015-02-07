@@ -35,6 +35,10 @@ var QuestionSchema = Schema({
     createdDate: {
         type: Date,
         default: Date.now
+    },
+    modifiedDate: {
+        type: Date,
+        default: Date.now
     }
 });
 
