@@ -1,8 +1,9 @@
-var path       = require("path"),
-    flash      = require("connect-flash"),
-    express    = require("express"),
-    session    = require("express-session"),
-    bodyParser = require("body-parser");
+var path         = require("path"),
+    flash        = require("connect-flash"),
+    express      = require("express"),
+    session      = require("express-session"),
+    bodyParser   = require("body-parser"),
+    cookieParser = require("cookie-parser");
 
 module.exports = function(passport) {
     "use strict";
@@ -10,10 +11,9 @@ module.exports = function(passport) {
     var app = express();
 
     app.use(express.static(__dirname + "../../../client"));
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
+    app.use(cookieParser());
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(session({ secret: "app-secret-key", resave: true, saveUninitialized: true }));
     app.use(passport.initialize());

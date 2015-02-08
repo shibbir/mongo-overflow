@@ -3,14 +3,34 @@
     Schema   = mongoose.Schema;
 
 var UserSchema = Schema({
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-        match: [/.+\@.+\..+/]
+    facebook: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
     },
-    avatar: String,
+    twitter: {
+        id: String,
+        token: String,
+        displayName: String,
+        username: String
+    },
+    google: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
+    },
+    local: {
+        email: {
+            type: String,
+            unique: true,
+            match: [/.+\@.+\..+/]
+        },
+        password: String
+    },
     name: String,
+    avatar: String,
     location: String,
     reputations: [{
         type: Schema.Types.ObjectId,
@@ -20,7 +40,6 @@ var UserSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "Badge"
     }],
-    password: String,
     role: {
         type: String,
         enum: ["basic", "moderator", "admin"],
@@ -49,7 +68,7 @@ UserSchema.methods.generateHash = function(password) {
 
 UserSchema.methods.validPassword = function(password) {
     "use strict";
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.local.password);
 };
 
 module.exports = mongoose.model("User", UserSchema);

@@ -1,10 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.controller("BaseCtrl", ["$scope", "configService", function($scope, configService) {
-        $scope.dirtyScope = {};
-
-        $scope.baseApiUrl = configService.baseApiUrl;
-        $scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
+    app.controller("BaseCtrl", ["configService", function(configService) {
+        this.baseApiUrl = configService.baseApiUrl;
     }]);
 })(angular.module("mongoOverflow"));

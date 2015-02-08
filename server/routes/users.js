@@ -13,7 +13,14 @@ module.exports = function(app, passport) {
             failureFlash: "Invalid username or password."
         }));
 
-    app.route("users/logout").get(authentication.requiresLogin, function(req, res) {
+    app.route("/auth/facebook").get(authentication.requireAnonymous, passport.authenticate("facebook", { scope : "email" }));
+
+    app.route("/auth/facebook/callback").get(authentication.requireAnonymous, passport.authenticate("facebook", {
+        successRedirect : "/",
+        failureRedirect : "/users/login"
+    }));
+
+    app.route("/users/logout").get(authentication.requiresLogin, function(req, res) {
         req.logout();
         res.redirect("/");
     });

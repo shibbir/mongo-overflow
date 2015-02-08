@@ -13,6 +13,7 @@ html
         div(ng-controller="BaseCtrl")
             include ../common/topBar
             div.container
+                include ../common/navigation
                 block content
             include ../common/footer
 
@@ -32,6 +33,7 @@ html
         script(src='/services/notifierService.js')
 
         script(src='/controllers/baseCtrl.js')
-        script(src='/controllers/account/registrationCtrl.js')
+        script(src='/controllers/account/loginCtrl.js')
+        script(src='/controllers/questionCtrl.js')
 
         script(src='/directives/homeFeed/index.js')

@@ -3,30 +3,18 @@ div.ui.fixed.menu
         div.title.item.active
             a(href="/")
                 b MongoOverflow
-        a.item(href="/questions")
-            i.idea.icon
-            span Questions
-        a.item(href="/tags")
-            i.tags.icon
-            span Tags
-        a.item(href="/users")
-            i.users.icon
-            span Users
-        a.item(href="/badges")
-            i.bookmark.icon
-            span Badges
-        a.item(href="/questions?type=unanswered")
-            i.translate.icon
-            span Unanswered
         div.right.menu
-            if(!user.name)
-                a.item(href="/users/login")
-                    i.sign.in.icon
-                    span Login
-            else
+            if(user.local.email || user.facebook.token)
                 a.item(href="/users/logout")
                     i.sign.out.icon
                     span Logout
+            else
+                a.item(href="/users/login")
+                    i.sign.in.icon
+                    span Login
+                a.item(href="/users/register")
+                    i.sign.in.icon
+                    span Sign Up
             div.item
                 div.ui.transparent.icon.input
                     input(placeholder="Search...", type="text")

@@ -12,6 +12,10 @@ hr {
     margin: 0 auto;
 }
 
+textarea {
+    resize: none !important;
+}
+
 .post-tag {
     color: #3e6d8e;
     font-size: 12px;

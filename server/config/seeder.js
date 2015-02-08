@@ -98,8 +98,8 @@ var userSeeder = function(callback) {
     async.each(array, function(idx, asyncCallback) {
         var user = new User();
         user.name = faker.Name.findName();
-        user.email = faker.Internet.email();
-        user.password = user.generateHash("123456");
+        user.local.email = faker.Internet.email();
+        user.local.password = user.generateHash("123456");
         user.location = faker.Address.ukCountry();
 
         user.save(function(err, doc) {
@@ -109,8 +109,8 @@ var userSeeder = function(callback) {
     }, function() {
         var user = new User();
         user.name = "Administrator";
-        user.email = "admin@mongo-overflow.com";
-        user.password = user.generateHash("admin");
+        user.local.email = "admin@mongo-overflow.com";
+        user.local.password = user.generateHash("admin");
         user.location = "Mars";
         user.role = "admin";
 
