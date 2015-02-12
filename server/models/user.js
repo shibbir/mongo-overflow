@@ -27,9 +27,9 @@ var UserSchema = Schema({
             unique: true,
             match: [/.+\@.+\..+/]
         },
-        password: String
+        password: String,
+        name: String
     },
-    name: String,
     avatar: String,
     location: String,
     reputations: [{

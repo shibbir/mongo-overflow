@@ -28,6 +28,10 @@ var QuestionSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
+    favorites: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     views: [{
         type: Schema.Types.ObjectId,
         ref: "User"

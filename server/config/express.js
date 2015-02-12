@@ -2,7 +2,9 @@ var path         = require("path"),
     flash        = require("connect-flash"),
     express      = require("express"),
     session      = require("express-session"),
+    database     = require("./database"),
     bodyParser   = require("body-parser"),
+    MongoStore   = require("connect-mongo")(session),
     cookieParser = require("cookie-parser");
 
 module.exports = function(passport) {
@@ -15,7 +17,15 @@ module.exports = function(passport) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.use(session({ secret: "app-secret-key", resave: true, saveUninitialized: true }));
+    app.use(session({
+        secret: "app-secret-key",
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({
+            url: database.config.url,
+            ttl: 7 * 24 * 60 * 60
+        })
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(flash());

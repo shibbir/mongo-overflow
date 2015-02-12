@@ -2,7 +2,7 @@
 
     "use strict";
 
-    angular.module("mongoOverflow", ["ngResource", "ngMessages", "angularFileUpload"]);
+    angular.module("mongoOverflow", ["ngMessages", "angularFileUpload"]);
 
     angular.module("mongoOverflow").config([
         "$httpProvider", "$compileProvider", function($httpProvider, $compileProvider) {

@@ -1,11 +1,10 @@
 extends ../layouts/master
 block content
-
     div.ui.grid
-        div.six.wide.column(ng-controller="LoginCtrl as ctrl")
-            form.ui.form(name="ctrl.form", novalidate, action="/users/login", method="POST", ng-submit="ctrl.login($event)")
+        div.six.wide.column(ng-controller="RegisterCtrl as ctrl")
+            form.ui.form(name="ctrl.form", novalidate, action="/users/register", method="POST", ng-submit="ctrl.register($event)")
 
-                h3.ui.dividing.header Please provide all required fields to login
+                h3.ui.dividing.header Register for a free account
 
                 if(error.length > 0)
                     div.ui.negative.message
@@ -14,36 +13,37 @@ block content
 
                 div.field.required
                     label Email
-                    div.ui.icon.input
+                    div.ui.input
                         input(type="email", placeholder="Email", name="email", ng-model="ctrl.email", required)
-                        i.mail.icon
                     div(ng-messages="ctrl.form.email.$error", ng-if="ctrl.form.email.$touched || ctrl.form.submitted")
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your email address
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="email") The email entered is not valid
 
                 div.field.required
+                    label Name
+                    div.ui.input
+                        input(type="text", placeholder="Your public display name", name="name", ng-model="ctrl.name", required)
+                    div(ng-messages="ctrl.form.name.$error", ng-if="ctrl.form.name.$touched || ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your name
+
+                div.field.required
                     label Password
-                    div.ui.icon.input
+                    div.ui.input
                         input(type="password", placeholder="Password", name="password", ng-model="ctrl.password", required, minlength="5")
-                        i.privacy.icon
                     div(ng-messages="ctrl.form.password.$error", ng-if="ctrl.form.password.$touched || ctrl.form.submitted")
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your password
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="minlength") The password entered is too short (Minimum 5 characters required)
 
-                button.ui.submit.button(type="submit") Login
-
+                button.ui.submit.button(type="submit") Register
 
         div.twelve.wide.column
-            h3.ui.dividing.header Or, Log in using any of the following services:
-
+            h3.ui.dividing.header Or, Sign up using any of the following services:
             a.ui.facebook.button(href="/auth/facebook")
                 i.icon.facebook
                 span Facebook
-
             a.ui.google.plus.button(href="/auth/google")
                 i.icon.google
                 span Google
-
             a.ui.twitter.button(href="/auth/twitter")
                 i.icon.twitter
                 span Twitter

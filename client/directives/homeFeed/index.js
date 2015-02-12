@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("questions", ["$resource", function($resource) {
+    app.directive("questions", ["httpService", function(httpService) {
         return {
             restrict: "E",
             replace: true,
@@ -9,10 +9,15 @@
             templateUrl: "/directives/homeFeed/template.html",
             link: function($scope) {
 
-                $scope.getQuestions = function(config) {
-                    $scope.questions = $resource("/api/questions").query({
-                        sort: config.sort,
-                        size: config.size
+                $scope.getQuestions = function(params) {
+                    var config = {
+                        params: {
+                            sort: params.sort,
+                            size: params.size
+                        }
+                    };
+                    httpService.get("/api/questions", config).success(function(data) {
+                        $scope.questions = data;
                     });
                 };
 

@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.controller("QuestionCtrl", ["$resource", function($resource) {
+    app.controller("QuestionCtrl", ["httpService", function(httpService) {
         this.form = this.form || {};
         this.question = {};
 
@@ -9,7 +9,9 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                $resource("/api/questions").save(question);
+                httpService.post("/api/questions", question).success(function(data) {
+                    window.location = "/questions/" + data._id;
+                });
             }
         };
     }]);

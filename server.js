@@ -1,6 +1,6 @@
-﻿var mongoose = require("mongoose"),
+﻿var _        = require("lodash"),
+    mongoose = require("mongoose"),
     passport = require("passport"),
-    _        = require("lodash"),
     database = require("./server/config/database");
 
 mongoose.connect(database.config.url);

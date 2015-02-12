@@ -1,0 +1,52 @@
+<div id="question">
+    <h2 class="ui dividing header" ng-bind="question.title"></h2>
+
+    <div class="ui grid">
+        <div class="one wide column">
+            <div class="ui grid text-center">
+                <div class="sixteen wide column" style="padding-bottom: 0">
+                    <a href="javascript:void(0)" title="This question shows research effort; it is useful and clear"
+                        ng-class="question.upVoted ? 'vote-up-on' : 'vote-up-off'" ng-click="voteUp(question)">
+                        <i class="chevron circle up icon"></i>
+                    </a>
+                </div>
+                <div class="sixteen wide column vote-count">
+                    <span ng-bind="question.upVotes.length - question.downVotes.length"></span>
+                </div>
+                <div class="sixteen wide column" style="padding-bottom: 0;">
+                    <a href="javascript:void(0)" title="This question does not show any research effort; it is unclear or not useful"
+                        ng-class="question.downVoted ? 'vote-down-on' : 'vote-down-off'" ng-click="voteDown(question)">
+                        <i class="chevron circle down icon"></i>
+                    </a>
+                </div>
+                <div class="sixteen wide column">
+                    <a href="javascript:void(0)" title="This is a favorite question (click again to undo)"
+                        ng-class="question.favorite ? 'favorite-on' : 'favorite-off'" ng-click="toggleFavorite(question)">
+                        <i class="star icon" ng-class="{ empty: !question.favorite, yellow: question.favorite }"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ten wide column">
+            <div class="question-description-container" ng-bind="question.description"></div>
+            <div class="tag-container">
+                <span ng-repeat="tag in question.tags">
+                    <a class="ui green tag label" ng-href="/tags/{{tag._id}}">{{ tag.name }}</a>
+                </span>
+            </div>
+            <div class="ui grid">
+                <div class="ten wide column">
+                    <a>Share</a> |
+                    <a ng-href="/questions/{{question._id}}/edit" title="Revise and improve this post">Edit</a> |
+                    <a>Close</a> |
+                    <a>Delete</a> |
+                    <a>Flag</a>
+                </div>
+                <div class="six wide column question-creator-container">
+                    <div>Asked <span ng-bind="question.createdDate"></span></div>
+                    <a ng-href="/users/{{question.creator._id}}">{{ question.creator.name }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,10 @@ textarea {
     resize: none !important;
 }
 
+.text-center {
+    text-align: center !important;
+}
+
 .post-tag {
     color: #3e6d8e;
     font-size: 12px;
@@ -51,6 +55,12 @@ textarea {
     padding-bottom: 5px !important;
 }
 
+#question .question-description-container {
+    margin-bottom: 10px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
 .tag-container {
     padding-top: 5px !important;
     padding-bottom: 10px !important;
@@ -63,4 +73,33 @@ textarea {
 
 i.icon {
     display: inline-block !important;
+}
+
+.vote-up-on, .vote-up-off,
+.favorite-on, .favorite-off,
+.vote-down-on, .vote-down-off {
+    font-size: 30px;
+}
+
+.vote-up-off, .vote-down-off,
+.favorite-off, .favorite-off:hover,
+.vote-up-off:hover, .vote-down-off:hover {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.vote-up-on, .vote-up-on:hover {
+    color: #00b5ad;
+}
+.vote-down-on, .vote-down-on:hover {
+    color: #d95c5c;
+}
+
+.vote-count {
+    left: -3px;
+    font-size: 25px !important;
+    padding-bottom: 0 !important;
+}
+
+.question-creator-container {
+    background-color: #e0eaf1 !important;
 }

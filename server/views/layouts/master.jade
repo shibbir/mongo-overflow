@@ -20,7 +20,6 @@ html
         script(src='/assets/bower_components/jquery/dist/jquery.js')
         script(src='/assets/bower_components/angular/angular.js')
         script(src='/assets/bower_components/angular-messages/angular-messages.js')
-        script(src='/assets/bower_components/angular-resource/angular-resource.js')
         script(src='/assets/bower_components/ng-file-upload/angular-file-upload.js')
         script(src='/assets/bower_components/socket.io-client/socket.io.js')
         script(src='/assets/bower_components/toastr/toastr.js')
@@ -30,10 +29,12 @@ html
         script(src='/app.js')
 
         script(src='/services/configService.js')
-        script(src='/services/notifierService.js')
-
-        script(src='/controllers/baseCtrl.js')
-        script(src='/controllers/account/loginCtrl.js')
-        script(src='/controllers/questionCtrl.js')
+        script(src='/services/httpService.js')
 
         script(src='/directives/homeFeed/index.js')
+        script(src='/directives/question/index.js')
+
+        script(src='/controllers/baseCtrl.js')
+        script(src='/controllers/account/registerCtrl.js')
+        script(src='/controllers/account/loginCtrl.js')
+        script(src='/controllers/questionCtrl.js')

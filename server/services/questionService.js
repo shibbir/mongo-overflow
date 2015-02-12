@@ -68,5 +68,100 @@ var postQuestion = function(req, res) {
     });
 };
 
+var getQuestion = function(req, res) {
+    "use strict";
+
+    questionRepository
+        .find(req.params.id)
+        .select("creator title answers views tags description upVotes downVotes favorites createdDate")
+        .populate("tags")
+        .populate("creator", "name reputations")
+        .exec(function(err, doc) {
+            if(err) {
+                return res.sendStatus(500);
+            }
+
+            doc = doc.toObject();
+            doc.upVoted = _.findWhere(doc.upVotes, function(chr) { return chr.toString() === req.user.id.toString; });
+            doc.downVoted = _.findWhere(doc.downVotes, function(chr) { return chr.toString() === req.user.id.toString; });
+            doc.favorite = _.findWhere(doc.favorites, function(chr) { return chr.toString() === req.user.id.toString; });
+
+            res.status(200).json(doc);
+        });
+};
+
+var pushUpVote = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $addToSet: { upVotes: req.user.id }, $pull: { downVotes: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+var pullUpVote = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $pull: { upVotes: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+var pushDownVote = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $addToSet: { downVotes: req.user.id }, $pull: { upVotes: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+var pullDownVote = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $pull: { downVotes: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+var pushFavorite = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $addToSet: { favorites: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+var pullFavorite = function(req, res) {
+    "use strict";
+
+    questionRepository.update({ _id: req.params.id }, { $pull: { favorites: req.user.id }}, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.sendStatus(200);
+    });
+};
+
+exports.getQuestion = getQuestion;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
+exports.pushUpVote = pushUpVote;
+exports.pullUpVote = pullUpVote;
+exports.pushDownVote = pushDownVote;
+exports.pullDownVote = pullDownVote;
+exports.pushFavorite = pushFavorite;
+exports.pullFavorite = pullFavorite;
