@@ -12,14 +12,14 @@ require("./server/config/passport")(passport);
 app.use(function(req, res, next) {
     "use strict";
 
-    var user = {
-        local: {},
-        facebook: {}
-    };
+    var user = {};
 
     if(req.user) {
-        user.local = _.pick(req.user.local, ["email"]);
-        user.facebook = _.pick(req.user.facebook, ["token"]);
+        user._id = req.user._id;
+        user.displayName = req.user.displayName;
+        user.seoName = _.kebabCase(req.user.displayName);
+        user.email = _.result(_.pick(req.user.local, ["email"]) || _.pick(req.user.facebook, ["email"]), "email");
+        user.isAuthenticated = true;
     }
     res.locals.user = user;
     next();

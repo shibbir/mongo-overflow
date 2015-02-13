@@ -40,7 +40,7 @@ module.exports = function(passport) {
                     return done(null, false);
                 }
 
-                return done(null, user);
+                done(null, user);
             });
         });
     }));
@@ -61,7 +61,12 @@ module.exports = function(passport) {
         }
 
         process.nextTick(function() {
-            User.findOne({ "local.email":  email }, function(err, user) {
+            User.findOne({ $or: [
+                { "local.email": email },
+                { "facebook.email": email },
+                { "twitter.email": email },
+                { "google.email": email }
+            ]}, function(err, user) {
                 if(err) {
                     return done(err);
                 }
@@ -71,6 +76,7 @@ module.exports = function(passport) {
                 } else {
                     var newUser = new User();
 
+                    newUser.displayName = req.body.name;
                     newUser.local.name = req.body.name;
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
@@ -79,7 +85,7 @@ module.exports = function(passport) {
                         if(err) {
                             return done(err);
                         }
-                        return done(null, newUser);
+                        done(null, newUser);
                     });
                 }
             });
@@ -98,16 +104,35 @@ module.exports = function(passport) {
         callbackURL: authConfig.facebook.callbackURL
     }, function(token, refreshToken, profile, done) {
         process.nextTick(function() {
-            User.findOne({ "facebook.id" : profile.id }, function(err, user) {
+            User.findOne({ $or: [
+                { "facebook.id" : profile.id },
+                { "local.email": profile.emails[0].value },
+                { "twitter.email": profile.emails[0].value },
+                { "google.email": profile.emails[0].value }
+            ]}, function(err, user) {
                 if(err) {
                     return done(err);
                 }
 
                 if(user) {
-                    return done(null, user);
+                    if(!user.facebook.token) {
+                        user.facebook.token = token;
+                        user.facebook.name = profile.name.givenName + " " + profile.name.familyName;
+                        user.facebook.email = profile.emails[0].value;
+
+                        user.save(function(err) {
+                            if(err) {
+                                return done(err);
+                            }
+                            done(null, user);
+                        });
+                    } else {
+                        done(null, user);
+                    }
                 } else {
                     var newUser = new User();
 
+                    newUser.displayName = profile.name.givenName + " " + profile.name.familyName;
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = token;
                     newUser.facebook.name = profile.name.givenName + " " + profile.name.familyName;
@@ -117,7 +142,7 @@ module.exports = function(passport) {
                         if(err) {
                             throw err;
                         }
-                        return done(null, newUser);
+                        done(null, newUser);
                     });
                 }
             });

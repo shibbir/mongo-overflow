@@ -3,6 +3,15 @@
     Schema   = mongoose.Schema;
 
 var UserSchema = Schema({
+    local: {
+        email: {
+            type: String,
+            unique: true,
+            match: [/.+\@.+\..+/]
+        },
+        password: String,
+        name: String
+    },
     facebook: {
         id: String,
         token: String,
@@ -21,17 +30,13 @@ var UserSchema = Schema({
         email: String,
         name: String
     },
-    local: {
-        email: {
-            type: String,
-            unique: true,
-            match: [/.+\@.+\..+/]
-        },
-        password: String,
-        name: String
+    displayName: {
+        type: String,
+        required: true
     },
     avatar: String,
     location: String,
+    website: String,
     reputations: [{
         type: Schema.Types.ObjectId,
         ref: "Reputation"

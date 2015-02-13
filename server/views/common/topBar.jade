@@ -4,7 +4,10 @@ div.ui.fixed.menu
             a(href="/")
                 b MongoOverflow
         div.right.menu
-            if(user.local.email || user.facebook.token)
+            if(user.isAuthenticated)
+                a.item(href="/users/#{user._id}/#{user.seoName}")
+                    i.user.icon
+                    span= user.displayName
                 a.item(href="/users/logout")
                     i.sign.out.icon
                     span Logout

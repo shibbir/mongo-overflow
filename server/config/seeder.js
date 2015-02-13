@@ -13,7 +13,7 @@ var tags = [],
     comments = [],
     numOfTags = 200,
     questions = [],
-    numOfUsers = 50,
+    numOfUsers = 10,
     numOfBadges = 200,
     numOfAnswers = 1000,
     numOfComments = 1000,
@@ -97,10 +97,13 @@ var userSeeder = function(callback) {
 
     async.each(array, function(idx, asyncCallback) {
         var user = new User();
-        user.name = faker.Name.findName();
+
+        user.local.name = faker.Name.findName();
+        user.displayName = _.kebabCase(user.local.name);
         user.local.email = faker.Internet.email();
         user.local.password = user.generateHash("123456");
         user.location = faker.Address.ukCountry();
+        user.website = "http://www." + faker.Internet.domainName();
 
         user.save(function(err, doc) {
             users.push(doc);
@@ -108,7 +111,7 @@ var userSeeder = function(callback) {
         });
     }, function() {
         var user = new User();
-        user.name = "Administrator";
+        user.local.name = "Administrator";
         user.local.email = "admin@mongo-overflow.com";
         user.local.password = user.generateHash("admin");
         user.location = "Mars";
