@@ -32,7 +32,8 @@
     "mongoose": "^3.8.23",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
-    "passport-http-bearer": "^1.0.1",
+    "passport-github": "^0.1.5",
+    "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
     "socket.io": "^1.3.3",
     "validator": "^3.30.0"

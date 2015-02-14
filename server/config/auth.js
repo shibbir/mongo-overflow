@@ -11,10 +11,14 @@ module.exports = {
         "consumerSecret": 'your-client-secret-here',
         "callbackURL": "http://localhost:7070/auth/twitter/callback"
     },
-
     "google": {
-        "clientID": 'your-secret-clientID-here',
-        "clientSecret": 'your-client-secret-here',
+        "clientID": "248099267842-12ioshqauvn8h2oggo141bhofvb9bgca.apps.googleusercontent.com",
+        "clientSecret": "sDHgKQNcvmkyylI7CekAoquf",
         "callbackURL": "http://localhost:7070/auth/google/callback"
+    },
+    "github": {
+        "clientID": "3358d50aaa74aac74d77",
+        "clientSecret": "bea0f2602274bb0048130faf591e2ed63210a29f",
+        "callbackURL": "http://localhost:7070/auth/github/callback"
     }
 };

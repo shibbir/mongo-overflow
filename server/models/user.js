@@ -14,21 +14,27 @@ var UserSchema = Schema({
     },
     facebook: {
         id: String,
-        token: String,
+        name: String,
         email: String,
-        name: String
+        token: String
     },
     twitter: {
         id: String,
+        name: String,
         token: String,
-        displayName: String,
         username: String
     },
     google: {
         id: String,
+        name: String,
         token: String,
+        email: String
+    },
+    github: {
+        id: String,
+        name: String,
         email: String,
-        name: String
+        username: String
     },
     displayName: {
         type: String,
