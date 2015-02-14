@@ -1,0 +1,121 @@
+extends ../layouts/master
+block content
+    h2.ui.dividing.header Registered User
+
+    div.ui.grid(ng-controller="ProfileEditCtrl as ctrl")
+        div.three.wide.column
+            img.ui.image(src="/assets/images/avatar.png", alt="Profile Picture", ng-src="{{ ctrl.user.avatar.url }}")
+            br
+            button.ui.button(ng-click="") Change Picture
+
+        div.six.wide.column
+            form.ui.form(name="ctrl.form", novalidate)
+
+                div.field.required
+                    label Display Name
+                    div.ui.input
+                        input(type="text", placeholder="Your public display name", name="displayName", ng-model="ctrl.user.displayName", required)
+                    div(ng-messages="ctrl.form.displayName.$error", ng-if="ctrl.form.displayName.$touched || ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your display name
+
+                div.field.required
+                    label Email
+                    div.ui.input
+                        input(type="email", placeholder="Email", name="email", ng-model="ctrl.user.local.email", required)
+                    div(ng-messages="ctrl.form.email.$error", ng-if="ctrl.form.email.$touched || ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your email address
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="email") The email entered is not valid
+
+                div.field.required
+                    label Real Name
+                    div.ui.input
+                        input(type="text", placeholder="Your real name", name="name", ng-model="ctrl.user.local.name", required)
+                    div(ng-messages="ctrl.form.name.$error", ng-if="ctrl.form.name.$touched || ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your real name
+
+                div.field
+                    label Birthday
+                    div.ui.grid.three.column
+                        div.column
+                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.day")
+                                option(value="") Day
+                                option(value="1") 1
+                                option(value="2") 2
+                                option(value="3") 3
+                                option(value="4") 4
+                                option(value="5") 5
+                                option(value="6") 6
+                                option(value="7") 7
+                                option(value="8") 8
+                                option(value="9") 9
+                                option(value="10") 10
+                                option(value="11") 11
+                                option(value="12") 12
+                                option(value="13") 13
+                                option(value="14") 14
+                                option(value="15") 15
+                                option(value="16") 16
+                                option(value="17") 17
+                                option(value="18") 18
+                                option(value="19") 19
+                                option(value="20") 20
+                                option(value="21") 21
+                                option(value="22") 22
+                                option(value="23") 23
+                                option(value="24") 24
+                                option(value="25") 25
+                                option(value="26") 26
+                                option(value="27") 27
+                                option(value="28") 28
+                                option(value="29") 29
+                                option(value="30") 30
+                                option(value="31") 31
+                        div.column
+                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.month")
+                                option(value="") Month
+                                option(value="1") January
+                                option(value="2") February
+                                option(value="3") March
+                                option(value="4") April
+                                option(value="5") May
+                                option(value="6") June
+                                option(value="7") July
+                                option(value="8") August
+                                option(value="9") September
+                                option(value="10") October
+                                option(value="11") November
+                                option(value="12") December
+
+                        div.column
+                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.year")
+                                option(value="") Year
+                                option(value="2010") 2010
+                                option(value="2009") 2009
+                                option(value="2008") 2008
+                                option(value="2007") 2007
+                                option(value="2006") 2006
+                                option(value="2005") 2005
+                                option(value="2004") 2004
+                                option(value="2003") 2003
+                                option(value="2002") 2002
+                                option(value="2001") 2001
+                                option(value="2000") 2000
+
+                div.field
+                    label Website
+                    div.ui.input
+                        input(type="url", placeholder="Website", name="website", ng-model="ctrl.user.website")
+                    div(ng-messages="ctrl.form.website.$error", ng-if="ctrl.form.website.$touched || ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="url") Please enter a valid link
+
+                div.field
+                    label Location
+                    div.ui.input
+                        input(type="text", placeholder="Location", name="location", ng-model="ctrl.user.location")
+
+                div.field
+                    label About Me
+                    div.ui.input
+                        textarea(name="location", ng-model="ctrl.user.location")
+
+                button.ui.submit.button(type="button", ng-click="ctrl.update(ctrl.user)") Save Changes

@@ -1,5 +1,7 @@
-var path         = require("path"),
+var fs           = require("fs"),
+    path         = require("path"),
     flash        = require("connect-flash"),
+    multer       = require("multer"),
     express      = require("express"),
     session      = require("express-session"),
     database     = require("./database"),
@@ -12,6 +14,7 @@ module.exports = function(passport) {
 
     var app = express();
 
+    app.use(express.static(__dirname + "../../../public"));
     app.use(express.static(__dirname + "../../../client"));
     app.use(cookieParser());
     app.use(bodyParser.json());
@@ -38,6 +41,16 @@ module.exports = function(passport) {
         app.set("json spaces", 2);
         app.locals.pretty = true;
     }
+
+    app.use(multer({
+        dest: "./public/uploads/",
+        limits: {
+            fileSize: 1024 * 1024 * 2
+        },
+        onFileSizeLimit: function(file) {
+            fs.unlinkSync("./" + file.path);
+        }
+    }));
 
     return app;
 };

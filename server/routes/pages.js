@@ -19,4 +19,12 @@ module.exports = function(app) {
     app.route("/questions/:id").get(function(req, res) {
         res.render("questions/view");
     });
+
+    app.route("/users/:id/edit").get(authentication.requiresLogin, function(req, res) {
+        res.render("users/edit");
+    });
+
+    app.route("/users/:id/:name").get(function(req, res) {
+        res.render("users/profile");
+    });
 };

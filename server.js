@@ -18,7 +18,6 @@ app.use(function(req, res, next) {
         user._id = req.user._id;
         user.displayName = req.user.displayName;
         user.seoName = _.kebabCase(req.user.displayName);
-        user.email = _.result(_.pick(req.user.local, ["email"]) || _.pick(req.user.facebook, ["email"]), "email");
         user.isAuthenticated = true;
     }
     res.locals.user = user;
@@ -26,8 +25,9 @@ app.use(function(req, res, next) {
 });
 
 require("./server/routes/pages")(app);
-require("./server/routes/users")(app, passport);
+require("./server/routes/auth")(app, passport);
 require("./server/routes/questions")(app);
+require("./server/routes/users")(app);
 
 //require("./server/config/seeder").seed();
 

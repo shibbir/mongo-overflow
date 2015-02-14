@@ -40,9 +40,18 @@ var UserSchema = Schema({
         type: String,
         required: true
     },
-    avatar: String,
+    avatar: {
+        file: String,
+        url: String
+    },
     location: String,
     website: String,
+    bio: String,
+    birthday: {
+        day: Number,
+        year: Number,
+        month: Number
+    },
     reputations: [{
         type: Schema.Types.ObjectId,
         ref: "Reputation"

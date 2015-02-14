@@ -8,14 +8,14 @@ div.ui.fixed.menu
                 a.item(href="/users/#{user._id}/#{user.seoName}")
                     i.user.icon
                     span= user.displayName
-                a.item(href="/users/logout")
+                a.item(href="/auth/logout")
                     i.sign.out.icon
                     span Logout
             else
-                a.item(href="/users/login")
+                a.item(href="/auth/login")
                     i.sign.in.icon
                     span Login
-                a.item(href="/users/register")
+                a.item(href="/auth/register")
                     i.sign.in.icon
                     span Sign Up
             div.item

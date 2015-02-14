@@ -7,6 +7,10 @@ hr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.ui.selection.dropdown {
+    min-width: 120px !important;
+}
+
 .container {
     width: 1170px;
     margin: 0 auto;
