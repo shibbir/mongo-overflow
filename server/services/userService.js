@@ -7,7 +7,7 @@ var getUser = function(req, res) {
 
     userRepository
         .find(req.params.id)
-        .select("local.name local.email displayName avatar location website bio")
+        .select("local.name local.email displayName avatar location website bio birthday")
         .exec(function(err, doc) {
             if(err) {
                 return res.sendStatus(500);
@@ -26,9 +26,9 @@ var updateInfo = function(req, res) {
         "local.email": req.body.local.email,
         website: req.body.website,
         location: req.body.location,
-        "birthday.day": _.parseInt(_.pick(req.body.birthday, "day")),
-        "birthday.month": _.parseInt(_.pick(req.body.birthday, "month")),
-        "birthday.year": _.parseInt(_.pick(req.body.birthday, "year")),
+        "birthday.day": _.parseInt(_.result(req.body.birthday, "day")),
+        "birthday.month": _.parseInt(_.result(req.body.birthday, "month")),
+        "birthday.year": _.parseInt(_.result(req.body.birthday, "year")),
         displayName: req.body.displayName
     };
 
@@ -41,5 +41,22 @@ var updateInfo = function(req, res) {
     });
 };
 
+var changePassword = function(req, res) {
+    "use strict";
+
+    if(req.user.generateHash(req.body.oldPassword) !== req.user.local.password) {
+        return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    userRepository.update({ _id: req.user.id }, { $set: { "local.password": req.user.generateHash(req.body.newPassword) }}, null, function(err) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+
+        res.sendStatus(200);
+    });
+};
+
 exports.getUser = getUser;
 exports.updateInfo = updateInfo;
+exports.changePassword = changePassword;

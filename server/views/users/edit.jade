@@ -2,13 +2,13 @@ extends ../layouts/master
 block content
     h2.ui.dividing.header Registered User
 
-    div.ui.grid(ng-controller="ProfileEditCtrl as ctrl")
+    div.ui.grid
         div.three.wide.column
             img.ui.image(src="/assets/images/avatar.png", alt="Profile Picture", ng-src="{{ ctrl.user.avatar.url }}")
             br
             button.ui.button(ng-click="") Change Picture
 
-        div.six.wide.column
+        div.six.wide.column(ng-controller="ProfileEditCtrl as ctrl")
             form.ui.form(name="ctrl.form", novalidate)
 
                 div.field.required
@@ -36,8 +36,8 @@ block content
                 div.field
                     label Birthday
                     div.ui.grid.three.column
-                        div.column
-                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.day")
+                        div#day.column
+                            select.ui.search.dropdown
                                 option(value="") Day
                                 option(value="1") 1
                                 option(value="2") 2
@@ -70,8 +70,8 @@ block content
                                 option(value="29") 29
                                 option(value="30") 30
                                 option(value="31") 31
-                        div.column
-                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.month")
+                        div#month.column
+                            select.ui.search.dropdown
                                 option(value="") Month
                                 option(value="1") January
                                 option(value="2") February
@@ -86,8 +86,8 @@ block content
                                 option(value="11") November
                                 option(value="12") December
 
-                        div.column
-                            select.ui.search.dropdown(ng-model="ctrl.user.birthday.year")
+                        div#year.column
+                            select.ui.search.dropdown
                                 option(value="") Year
                                 option(value="2010") 2010
                                 option(value="2009") 2009
@@ -116,6 +116,34 @@ block content
                 div.field
                     label About Me
                     div.ui.input
-                        textarea(name="location", ng-model="ctrl.user.location")
+                        textarea(name="location", ng-model="ctrl.user.bio")
 
                 button.ui.submit.button(type="button", ng-click="ctrl.update(ctrl.user)") Save Changes
+
+        div.five.wide.column(ng-controller="PasswordResetCtrl as ctrl")
+            h3.ui.header.dividing Change Password
+            form.ui.form(name="ctrl.form", novalidate)
+
+                div.field.required
+                    label Old Password
+                    div.ui.input
+                        input(type="password", placeholder="Old Password", name="oldPassword", ng-model="ctrl.data.oldPassword", required)
+                    div(ng-messages="ctrl.form.oldPassword.$error", ng-if="ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your old password
+
+                div.field.required
+                    label New Password
+                    div.ui.input
+                        input(type="password", placeholder="New Password", name="newPassword", ng-model="ctrl.data.newPassword", required, minlength="5")
+                    div(ng-messages="ctrl.form.newPassword.$error", ng-if="ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter a new address
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="minlength") The password entered is too short (Minimum 5 characters required)
+
+                div.field.required
+                    label Confirm New Password
+                    div.ui.input
+                        input(type="password", placeholder="Confirm New Password", name="confirmPassword", ng-model="ctrl.data.confirmPassword", required)
+                    div(ng-messages="ctrl.form.confirmPassword.$error", ng-if="ctrl.form.submitted")
+                        div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Password & confirm password doesn't match
+
+                button.ui.submit.button(type="button", ng-click="ctrl.changePassword(ctrl.data)") Change Password

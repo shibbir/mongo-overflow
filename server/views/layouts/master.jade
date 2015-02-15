@@ -7,6 +7,7 @@ html
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='icon', href='/img/favicon.ico', type='image/x-icon')
 
+        link(rel='stylesheet', href='/assets/bower_components/toastr/toastr.css')
         link(rel='stylesheet', href='/assets/bower_components/semantic-ui/dist/semantic.css')
         link(rel='stylesheet', href='/assets/css/site.css')
     body(ng-app="mongoOverflow", ng-strict-di)
@@ -30,6 +31,7 @@ html
 
         script(src='/services/configService.js')
         script(src='/services/httpService.js')
+        script(src='/services/notifierService.js')
 
         script(src='/directives/homeFeed/index.js')
         script(src='/directives/question/index.js')
