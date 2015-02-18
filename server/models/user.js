@@ -41,8 +41,8 @@ var UserSchema = Schema({
         required: true
     },
     avatar: {
-        file: String,
-        url: String
+        type: Schema.Types.ObjectId,
+        ref: "File"
     },
     location: String,
     website: String,

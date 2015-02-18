@@ -12,7 +12,7 @@ exports.requiresLogin = function(req, res, next) {
 
     if(!req.isAuthenticated()) {
 
-        if(req.xhr()) {
+        if(req.xhr) {
             return res.sendStatus(401);
         }
 

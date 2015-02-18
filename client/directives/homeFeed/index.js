@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("questions", ["httpService", function(httpService) {
+    app.directive("questions", ["httpService", "configService", function(httpService, configService) {
         return {
             restrict: "E",
             replace: true,
@@ -16,7 +16,7 @@
                             size: params.size
                         }
                     };
-                    httpService.get("/api/questions", config).success(function(data) {
+                    httpService.get(configService.baseApiUrl + "/questions", config).success(function(data) {
                         $scope.questions = data;
                     });
                 };

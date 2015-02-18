@@ -3,10 +3,13 @@ block content
     h2.ui.dividing.header Registered User
 
     div.ui.grid
-        div.three.wide.column
+        div.three.wide.column(ng-controller="AvatarUploadCtrl as ctrl")
             img.ui.image(src="/assets/images/avatar.png", alt="Profile Picture", ng-src="{{ ctrl.user.avatar.url }}")
             br
-            button.ui.button(ng-click="") Change Picture
+
+            label.ui.button(for="file")
+                span Change Picture
+            input#file(type="file", style="display:none;", multiple accept="image/*", ng-file-select, ng-file-change="ctrl.uploadAvatar($files)")
 
         div.six.wide.column(ng-controller="ProfileEditCtrl as ctrl")
             form.ui.form(name="ctrl.form", novalidate)

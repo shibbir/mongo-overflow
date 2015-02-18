@@ -1,6 +1,13 @@
 var _              = require("lodash"),
     validator      = require("validator"),
+    fileService    = require("../services/fileService"),
+    utilityService = require("../services/utilityService"),
     userRepository = require("../repositories/userRepository");
+
+var formatUserViewModel = function(user) {
+    "use strict";
+    return user;
+};
 
 var getUser = function(req, res) {
     "use strict";
@@ -8,12 +15,19 @@ var getUser = function(req, res) {
     userRepository
         .find(req.params.id)
         .select("local.name local.email displayName avatar location website bio birthday")
+        .populate("avatar", "fileName")
         .exec(function(err, doc) {
             if(err) {
                 return res.sendStatus(500);
             }
 
-            res.status(200).json(doc);
+            doc = doc.toObject();
+
+            if(doc.avatar) {
+                doc.avatar = utilityService.getProtocol(req) + "://" + "localhost:7070" + "/uploads/" + doc.avatar.fileName;
+            }
+
+            res.status(200).json(formatUserViewModel(doc));
         });
 };
 
@@ -41,11 +55,37 @@ var updateInfo = function(req, res) {
     });
 };
 
+var changeAvatar = function(req, res) {
+    "use strict";
+
+    if(!req.files.file) {
+        return res.sendStatus(400);
+    }
+
+    fileService.add(req.files.file, function(err, doc) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+
+        userRepository.update({ _id: req.user.id }, { $set: { avatar: doc._id }}, null, function(err) {
+            if(err) {
+                return res.sendStatus(500);
+            }
+
+            res.sendStatus(200);
+        });
+    });
+};
+
 var changePassword = function(req, res) {
     "use strict";
 
-    if(req.user.generateHash(req.body.oldPassword) !== req.user.local.password) {
-        return res.status(400).json({ message: "Old password is incorrect" });
+    if(!req.user.validPassword(req.body.oldPassword)) {
+        return res.status(400).json({ message: "Old password is incorrect." });
+    }
+
+    if(req.body.newPassword !== req.body.confirmPassword) {
+        return res.status(400).json({ message: "Confirm password didn't match." });
     }
 
     userRepository.update({ _id: req.user.id }, { $set: { "local.password": req.user.generateHash(req.body.newPassword) }}, null, function(err) {
@@ -59,4 +99,5 @@ var changePassword = function(req, res) {
 
 exports.getUser = getUser;
 exports.updateInfo = updateInfo;
+exports.changeAvatar = changeAvatar;
 exports.changePassword = changePassword;
