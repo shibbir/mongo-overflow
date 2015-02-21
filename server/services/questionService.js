@@ -1,5 +1,6 @@
 var Tag                = require("../models/tag"),
     _                  = require("lodash"),
+    Question           = require("../models/question"),
     validator          = require("validator"),
     questionRepository = require("../repositories/questionRepository");
 
@@ -28,26 +29,36 @@ var getQuestions = function(req, res) {
         // votes
         // last activity
 
-    var query = questionRepository.findAll(skip, size);
-
-    if(sort === "new") {
-        query.sort({ "createdDate": -1 });
-    }
-
-    query.select("creator title answers views tags description");
-    query.populate("tags");
-    query.populate("creator", "name reputations");
-    query.lean();
-
-    query.exec(function(err, docs) {
+    questionRepository.findAll(skip, size, function(err, query, count) {
         if(err) {
             return res.sendStatus(500);
         }
 
-        _.forEach(docs, function(doc) {
-            doc = formatQuestion(doc);
+        if(sort === "new") {
+            query.sort({ "createdDate": -1 });
+        }
+
+        query.select("creator title answers views tags description");
+        query.populate("tags");
+        query.populate("creator", "name reputations");
+        query.lean();
+
+        query.exec(function(err, docs) {
+            if(err) {
+                return res.sendStatus(500);
+            }
+
+            _.forEach(docs, function(doc) {
+                doc = formatQuestion(doc);
+            });
+            res.status(200).json({
+                data: docs,
+                pagination: {
+                    page: page,
+                    pages: count / size
+                }
+            });
         });
-        res.status(200).json(docs);
     });
 };
 
@@ -156,6 +167,17 @@ var pullFavorite = function(req, res) {
     });
 };
 
+var getCountByQuery = function(query, callback) {
+    "use strict";
+
+    Question.where(query).count(function(err, count) {
+        if(err) {
+            return callback(err);
+        }
+        callback(null, count);
+    });
+};
+
 exports.getQuestion = getQuestion;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
@@ -165,3 +187,4 @@ exports.pushDownVote = pushDownVote;
 exports.pullDownVote = pullDownVote;
 exports.pushFavorite = pushFavorite;
 exports.pullFavorite = pullFavorite;
+exports.getCountByQuery = getCountByQuery;

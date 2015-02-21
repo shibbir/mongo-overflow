@@ -8,6 +8,10 @@ module.exports = function(app) {
         res.render("pages/home");
     });
 
+    app.route("/tags").get(function(req, res) {
+        res.render("tags/index");
+    });
+
     app.route("/questions").get(function(req, res) {
         res.render("questions/index");
     });

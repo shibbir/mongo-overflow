@@ -2,15 +2,6 @@ body {
     padding-top: 50px;
 }
 
-hr {
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.ui.selection.dropdown {
-    min-width: 120px !important;
-}
-
 .container {
     width: 1170px;
     margin: 0 auto;
@@ -22,6 +13,10 @@ textarea {
 
 .text-center {
     text-align: center !important;
+}
+
+.text-right {
+    text-align: right !important;
 }
 
 .post-tag {
@@ -75,10 +70,6 @@ textarea {
     padding: 3em 0 3em !important;
 }
 
-i.icon {
-    display: inline-block !important;
-}
-
 .vote-up-on, .vote-up-off,
 .favorite-on, .favorite-off,
 .vote-down-on, .vote-down-off {
@@ -106,4 +97,28 @@ i.icon {
 
 .question-creator-container {
     background-color: #e0eaf1 !important;
+}
+
+/* Semantic UI Customization: START */
+
+hr {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ui.selection.dropdown {
+    min-width: 120px !important;
+}
+
+.footer {
+    border-radius: 0 !important;
+    padding: 3em 0 3em !important;
+}
+
+i.icon {
+    display: inline-block !important;
+}
+
+#tags-container .card .description {
+    height: 85px !important;
 }

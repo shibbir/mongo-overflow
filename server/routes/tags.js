@@ -5,5 +5,6 @@ module.exports = function(app) {
     "use strict";
 
     app.route("/api/tags")
-        .get(authentication.requiresLogin, tagService.getTags);
+        .get(tagService.getTags)
+        .post(authentication.requiresLogin, tagService.getTags);
 };

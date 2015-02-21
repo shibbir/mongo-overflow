@@ -12,10 +12,14 @@ var TagSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
-    questions: [{
+    creator: {
         type: Schema.Types.ObjectId,
-        ref: "Question"
-    }]
+        ref: "User"
+    },
+    createdDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model("Tag", TagSchema);

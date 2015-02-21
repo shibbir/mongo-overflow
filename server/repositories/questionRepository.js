@@ -6,10 +6,15 @@ var find = function(id) {
     return Question.findOne({ _id: id });
 };
 
-var findAll = function(skip, size) {
+var findAll = function(skip, size, callback) {
     "use strict";
 
-    return Question.find({}).skip(skip).limit(size);
+    Question.where({}).count(function(err, count) {
+        if(err) {
+            return callback(err);
+        }
+        callback(null, Question.find({}).skip(skip).limit(size), count);
+    });
 };
 
 var insert = function(model, callback) {
