@@ -16,11 +16,32 @@ Running Unit Tests
 Install mocha globally:
 
 ```bash
-$ npm install mocha -g
+$ npm install -g mocha
 ```
 
 Then, Run Tests:
 
 ```bash
 $ mocha
+```
+
+Running End To End Tests
+====================
+
+Install Protractor globally:
+
+```bash
+$ npm install -g protractor
+```
+
+Now start up a server with:
+
+```bash
+$ webdriver-manager start
+```
+
+Run Test:
+
+```bash
+protractor client/test/e2e/conf.js
 ```
