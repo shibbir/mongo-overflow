@@ -16,7 +16,11 @@ var getTags = function(req, res) {
         }
 
         if(sort === "new") {
-            query.sort({ "createdDate": -1 });
+            query.sort({ "date": -1 });
+        } else if(sort === "name") {
+            query.sort({ "name": 1 });
+        } else if(sort === "popular") {
+            query.sort({ "name": 1 });
         }
 
         query.populate("creator", "displayName");

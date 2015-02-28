@@ -35,23 +35,25 @@
             httpService.get("/api/users/" + userId).success(function(data) {
                 ctrl.user = data;
 
-                $("#day .text").text(ctrl.user.birthday.day).removeClass("default");
-                $("#day .item").removeClass("active selected");
-                $("#day .item").filter(function() {
-                    return $(this).data("value") === ctrl.user.birthday.day;
-                }).addClass("active selected" );
+                if(ctrl.user.birthday) {
+                    $("#day .text").text(ctrl.user.birthday.day).removeClass("default");
+                    $("#day .item").removeClass("active selected");
+                    $("#day .item").filter(function () {
+                        return $(this).data("value") === ctrl.user.birthday.day;
+                    }).addClass("active selected");
 
-                $("#month .text").text(ctrl.user.birthday.month).removeClass("default");
-                $("#month .item").removeClass("active selected");
-                $("#month .item").filter(function() {
-                    return $(this).data("value") === ctrl.user.birthday.month;
-                }).addClass("active selected" );
+                    $("#month .text").text(ctrl.user.birthday.month).removeClass("default");
+                    $("#month .item").removeClass("active selected");
+                    $("#month .item").filter(function () {
+                        return $(this).data("value") === ctrl.user.birthday.month;
+                    }).addClass("active selected");
 
-                $("#year .text").text(ctrl.user.birthday.year).removeClass("default");
-                $("#year .item").removeClass("active selected");
-                $("#year .item").filter(function() {
-                    return $(this).data("value") === ctrl.user.birthday.year;
-                }).addClass("active selected" );
+                    $("#year .text").text(ctrl.user.birthday.year).removeClass("default");
+                    $("#year .item").removeClass("active selected");
+                    $("#year .item").filter(function () {
+                        return $(this).data("value") === ctrl.user.birthday.year;
+                    }).addClass("active selected");
+                }
             });
         }();
 

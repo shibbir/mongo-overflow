@@ -22,7 +22,7 @@ var FileSchema = Schema({
     mimeType: {
         type: String
     },
-    createdDate: {
+    date: {
         type: Date,
         default: Date.now
     },

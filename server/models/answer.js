@@ -27,7 +27,7 @@ var AnswerSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
-    createdDate: {
+    date: {
         type: Date,
         default: Date.now
     }

@@ -65,7 +65,7 @@ var UserSchema = Schema({
         enum: ["basic", "moderator", "admin"],
         default: "basic"
     },
-    createdDate: {
+    date: {
         type: Date,
         default: Date.now
     }

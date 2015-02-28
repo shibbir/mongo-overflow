@@ -35,7 +35,7 @@ var getQuestions = function(req, res) {
         }
 
         if(sort === "new") {
-            query.sort({ "createdDate": -1 });
+            query.sort({ "date": -1 });
         }
 
         query.select("creator title answers views tags description");
@@ -84,7 +84,7 @@ var getQuestion = function(req, res) {
 
     questionRepository
         .find(req.params.id)
-        .select("creator title answers views tags description upVotes downVotes favorites createdDate")
+        .select("creator title answers views tags description upVotes downVotes favorites date")
         .populate("tags")
         .populate("creator", "name reputations")
         .exec(function(err, doc) {

@@ -1,36 +1,49 @@
-<div id="tags-container">
-    <div class="ui four column grid">
-        <div ng-repeat="tag in tags" class="column">
-            <div class="ui fluid card">
-                <div class="content">
-                    <a class="header" ng-href="/questions?tag={{tag.name}}">{{ tag.name }}</a>
-                    <div class="meta">
-                        901 asked today, 5384 this week
-                    </div>
-                    <div class="description" ng-bind="tag.description"></div>
-                </div>
-                <div class="extra content">
-                    <span class="left floated star">
-                        <i class="star icon"></i>
-                        {{ tag.followers.length }} followers
-                    </span>
-                    <span class="right floated idea">
-                        <i class="idea icon"></i>
-                        {{ tag.questions }} questions
-                    </span>
+<div>
+    <div class="ui.grid">
+        <div class="column">
+            <div class="ui form">
+                <div class="field inline">
+                    <label>Type to find tags:</label>
+                    <input type="text" placeholder="filter by name" ng-model="searchTag" />
                 </div>
             </div>
         </div>
     </div>
-    <div ng-if="pages.length" class="text-right">
-        <br />
-        <br />
-        <div class="ui pagination menu">
-            <a class="item"
-               ng-repeat="page in pages"
-               ng-class="{ active: page.active }"
-               ng-href="{{ page.href }}">{{ $index + 1 }}
-            </a>
+    <br />
+    <div id="tags-container">
+        <div class="ui four column grid">
+            <div ng-repeat="tag in tags | filter: searchTag" class="column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <a class="header" ng-href="/questions?tag={{tag.name}}">{{ tag.name }}</a>
+                        <div class="meta">
+                            901 asked today, 5384 this week
+                        </div>
+                        <div class="description" ng-bind="tag.description"></div>
+                    </div>
+                    <div class="extra content">
+                        <span class="left floated star">
+                            <i class="star icon"></i>
+                            {{ tag.followers.length }} followers
+                        </span>
+                        <span class="right floated idea">
+                            <i class="idea icon"></i>
+                            {{ tag.questions }} questions
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="pages.length" class="text-right">
+            <br />
+            <br />
+            <div class="ui pagination menu">
+                <a class="item"
+                   ng-repeat="page in pages"
+                   ng-class="{ active: page.active }"
+                   ng-href="{{ page.href }}">{{ $index + 1 }}
+                </a>
+            </div>
         </div>
     </div>
 </div>
