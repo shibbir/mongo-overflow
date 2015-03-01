@@ -2,6 +2,7 @@ var Tag                = require("../models/tag"),
     _                  = require("lodash"),
     Question           = require("../models/question"),
     validator          = require("validator"),
+    reputationService  = require("./reputationService"),
     questionRepository = require("../repositories/questionRepository");
 
 var formatQuestion = function(question) {
@@ -101,47 +102,113 @@ var getQuestion = function(req, res) {
         });
 };
 
-var pushUpVote = function(req, res) {
+var upVote = function(req, res) {
     "use strict";
 
-    questionRepository.update({ _id: req.params.id }, { $addToSet: { upVotes: req.user.id }, $pull: { downVotes: req.user.id }}, function(err) {
-        if(err) {
-            return res.sendStatus(500);
+    var query = {
+        $addToSet: { upVotes: req.user.id },
+        $pull: { downVotes: req.user.id }
+    };
+
+    questionRepository.findByQuery({ _id: req.params.id, downVotes: req.user.id }, function(err, downVoted) {
+        if(downVoted) {
+            delete query.$addToSet;
         }
-        res.sendStatus(200);
+
+        questionRepository.findByIdAndUpdate(req.params.id, query, function(err, doc) {
+            if(err) {
+                return res.sendStatus(500);
+            }
+
+            var data = {
+                upVotes: doc.upVotes,
+                downVotes: doc.downVotes,
+                upVoted: doc.isUpVoted(req.user.id),
+                downVoted: doc.isDownVoted(req.user.id)
+            };
+
+            if(downVoted) {
+                reputationService.pull({
+                    appreciator: req.user.id,
+                    question: req.params.id,
+                    reputationType: "downVote"
+                }, function(err) {
+                    if(err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(200).json(data);
+                });
+            } else {
+                reputationService.push({
+                    contributor: doc.creator,
+                    appreciator: req.user.id,
+                    question: req.params.id,
+                    reputationType: "upVote",
+                    area: { id: req.params.id, type: "question" },
+                    contribution: { asked: true }
+                }, function(err) {
+                    if(err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(200).json(data);
+                });
+            }
+        });
     });
 };
 
-var pullUpVote = function(req, res) {
+var downVote = function(req, res) {
     "use strict";
 
-    questionRepository.update({ _id: req.params.id }, { $pull: { upVotes: req.user.id }}, function(err) {
-        if(err) {
-            return res.sendStatus(500);
+    var query = {
+        $addToSet: { downVotes: req.user.id },
+        $pull: { upVotes: req.user.id }
+    };
+
+    questionRepository.findByQuery({ _id: req.params.id, upVotes: req.user.id }, function(err, upVoted) {
+        if(upVoted) {
+            delete query.$addToSet;
         }
-        res.sendStatus(200);
-    });
-};
 
-var pushDownVote = function(req, res) {
-    "use strict";
+        questionRepository.findByIdAndUpdate(req.params.id, query, function(err, doc) {
+            if(err) {
+                return res.sendStatus(500);
+            }
 
-    questionRepository.update({ _id: req.params.id }, { $addToSet: { downVotes: req.user.id }, $pull: { upVotes: req.user.id }}, function(err) {
-        if(err) {
-            return res.sendStatus(500);
-        }
-        res.sendStatus(200);
-    });
-};
+            var data = {
+                upVotes: doc.upVotes,
+                downVotes: doc.downVotes,
+                upVoted: doc.isUpVoted(req.user.id),
+                downVoted: doc.isDownVoted(req.user.id)
+            };
 
-var pullDownVote = function(req, res) {
-    "use strict";
-
-    questionRepository.update({ _id: req.params.id }, { $pull: { downVotes: req.user.id }}, function(err) {
-        if(err) {
-            return res.sendStatus(500);
-        }
-        res.sendStatus(200);
+            if(upVoted) {
+                reputationService.pull({
+                    appreciator: req.user.id,
+                    question: req.params.id,
+                    reputationType: "upVote"
+                }, function(err) {
+                    if(err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(200).json(data);
+                });
+            } else {
+                reputationService.push({
+                    contributor: doc.creator,
+                    appreciator: req.user.id,
+                    question: req.params.id,
+                    reputationType: "downVote",
+                    area: { id: req.params.id, type: "question" },
+                    contribution: { asked: true }
+                }, function(err) {
+                    if(err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(200).json(data);
+                });
+            }
+        });
     });
 };
 
@@ -181,10 +248,8 @@ var getCountByQuery = function(query, callback) {
 exports.getQuestion = getQuestion;
 exports.getQuestions = getQuestions;
 exports.postQuestion = postQuestion;
-exports.pushUpVote = pushUpVote;
-exports.pullUpVote = pullUpVote;
-exports.pushDownVote = pushDownVote;
-exports.pullDownVote = pullDownVote;
+exports.upVote = upVote;
+exports.downVote = downVote;
 exports.pushFavorite = pushFavorite;
 exports.pullFavorite = pullFavorite;
 exports.getCountByQuery = getCountByQuery;

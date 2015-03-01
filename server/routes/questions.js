@@ -12,12 +12,10 @@ module.exports = function(app) {
         .get(questionService.getQuestion);
 
     app.route("/api/questions/:id/upVote")
-        .patch(authentication.requiresLogin, questionService.pushUpVote)
-        .delete(authentication.requiresLogin, questionService.pullUpVote);
+        .patch(authentication.requiresLogin, questionService.upVote);
 
     app.route("/api/questions/:id/downVote")
-        .patch(authentication.requiresLogin, questionService.pushDownVote)
-        .delete(authentication.requiresLogin, questionService.pullDownVote);
+        .patch(authentication.requiresLogin, questionService.downVote);
 
     app.route("/api/questions/:id/favorite")
         .patch(authentication.requiresLogin, questionService.pushFavorite)

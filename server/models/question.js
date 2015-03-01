@@ -1,9 +1,15 @@
-﻿var mongoose = require("mongoose"),
+﻿var _        = require("lodash"),
+    mongoose = require("mongoose"),
     Schema   = mongoose.Schema;
 
 var QuestionSchema = Schema({
     title: String,
     description: String,
+    bounty: Number,
+    flags: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     tags: [{
         type: Schema.Types.ObjectId,
         ref: "Tag"
@@ -45,5 +51,15 @@ var QuestionSchema = Schema({
         default: Date.now
     }
 });
+
+QuestionSchema.methods.isUpVoted = function(userId) {
+    "use strict";
+    return undefined !== _.findWhere(this.upVotes, function(chr) { return chr.toString() === userId.toString; });
+};
+
+QuestionSchema.methods.isDownVoted = function(userId) {
+    "use strict";
+    return undefined !== _.findWhere(this.downVotes, function(chr) { return chr.toString() === userId.toString; });
+};
 
 module.exports = mongoose.model("Question", QuestionSchema);

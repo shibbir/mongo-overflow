@@ -11,6 +11,10 @@ var AnswerSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "Question"
     },
+    flags: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     verdict: {
         type: String,
         enum: ["accepted"]

@@ -7,6 +7,10 @@ var CommentSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    flags: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     upVotes: [{
         type: Schema.Types.ObjectId,
         ref: "User"

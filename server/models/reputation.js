@@ -4,26 +4,35 @@ var mongoose = require("mongoose"),
 var ReputationSchema = Schema({
     contributor: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     appreciator: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     question: {
         type: Schema.Types.ObjectId,
-        ref: "Question"
+        ref: "Question",
+        required: true
     },
     reputationType: {
         type: String,
-        enum: ["upVote", "accept"]
+        enum: ["upVote", "downVote", "accepted"]
     },
-    contribution: {
+    area: {
         id: Schema.Types.ObjectId,
         type: {
             type: String,
             enum: ["question", "answer", "comment"]
         }
+    },
+    contribution: {
+        asked: Boolean,
+        answered: Boolean,
+        commented: Boolean,
+        votedDown: Boolean
     },
     date: {
         type: Date,

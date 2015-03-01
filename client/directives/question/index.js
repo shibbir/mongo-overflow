@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("question", ["httpService", "configService", function(httpService, configService) {
+    app.directive("question", ["httpService", "configService", "$timeout", function(httpService, configService, $timeout) {
         return {
             restrict: "E",
             replace: true,
@@ -21,43 +21,21 @@
 
                 $scope.voteUp = function(question) {
                     if(!question.upVoted) {
-                        if(question.downVoted) {
-                            httpService.remove(configService.baseApiUrl + "/questions/" + question._id + "/downVote").success(function () {
-                                delete question.downVoted;
-                                question.downVotes.length--;
+                        httpService.patch("/api/questions/" + question._id + "/upVote").success(function(response) {
+                            $timeout(function() {
+                                _.assign(question, _.pick(response, "upVotes", "downVotes", "upVoted", "downVoted"));
                             });
-                        } else {
-                            httpService.patch("/api/questions/" + question._id + "/upVote").success(function () {
-                                question.upVotes.length++;
-
-                                if(question.downVoted) {
-                                    delete question.downVoted;
-                                } else {
-                                    question.upVoted = true;
-                                }
-                            });
-                        }
+                        });
                     }
                 };
 
                 $scope.voteDown = function(question) {
                     if(!question.downVoted) {
-                        if(question.upVoted) {
-                            httpService.remove(configService.baseApiUrl + "/questions/" + question._id + "/upVote").success(function () {
-                                delete question.upVoted;
-                                question.upVotes.length--;
+                        httpService.patch(configService.baseApiUrl + "/questions/" + question._id + "/downVote").success(function(response) {
+                            $timeout(function() {
+                                _.assign(question, _.pick(response, "upVotes", "downVotes", "upVoted", "downVoted"));
                             });
-                        } else {
-                            httpService.patch(configService.baseApiUrl + "/questions/" + question._id + "/downVote").success(function () {
-                                question.downVotes.length++;
-
-                                if(question.upVoted) {
-                                    delete question.upVoted;
-                                } else {
-                                    question.downVoted = true;
-                                }
-                            });
-                        }
+                        });
                     }
                 };
 
