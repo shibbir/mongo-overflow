@@ -1,4 +1,5 @@
 var _              = require("lodash"),
+    moment         = require("moment"),
     validator      = require("validator"),
     fileService    = require("../services/fileService"),
     utilityService = require("../services/utilityService"),
@@ -6,6 +7,19 @@ var _              = require("lodash"),
 
 var formatUserViewModel = function(user) {
     "use strict";
+
+    if(user.birthday) {
+        user.age = utilityService.calcAge(user.birthday.year + "/" + user.birthday.month + "/" + user.birthday.day);
+        user.date = moment(user.date).format("MMMM D, YYYY");
+        delete user.birthday;
+    }
+
+    if(user.local) {
+        user.name = user.local.name;
+        user.email = user.local.email;
+        delete user.local;
+    }
+
     return user;
 };
 
@@ -14,7 +28,7 @@ var getUser = function(req, res) {
 
     userRepository
         .find(req.params.id)
-        .select("local.name local.email displayName avatar location website bio birthday")
+        .select("local.name local.email displayName avatar location website bio birthday views date")
         .populate("avatar", "fileName")
         .exec(function(err, doc) {
             if(err) {

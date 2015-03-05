@@ -65,6 +65,10 @@ var UserSchema = Schema({
         enum: ["basic", "moderator", "admin"],
         default: "basic"
     },
+    views: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     date: {
         type: Date,
         default: Date.now

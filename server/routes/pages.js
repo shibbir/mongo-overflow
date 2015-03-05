@@ -29,6 +29,6 @@ module.exports = function(app) {
     });
 
     app.route("/users/:id/:name").get(function(req, res) {
-        res.render("users/profile");
+        res.render("users/profile", { userId: req.params.id });
     });
 };

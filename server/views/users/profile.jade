@@ -1,4 +1,4 @@
 extends ../layouts/master
 block content
 
-    a(href="/users/#{user._id}/edit") Edit
+    profile(user-id='"#{userId}"')
