@@ -1,47 +1,8 @@
-﻿var mongoose = require("mongoose"),
-    bcrypt   = require("bcrypt-nodejs"),
-    Schema   = mongoose.Schema,
-    enums    = require("../config/enums");
-
-var ReputationSchema = Schema({
-    contributor: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
-    appreciator: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
-    question: {
-        type: Schema.Types.ObjectId,
-        ref: "Question",
-        required: true
-    },
-    reputationType: {
-        type: String,
-        enum: [ enums.reputation.UpVote, enums.reputation.DownVote, enums.reputation.Accepted ]
-    },
-    area: {
-        id: Schema.Types.ObjectId,
-        type: {
-            type: String,
-            enum: [ enums.reputation.Question, enums.reputation.Answer, enums.reputation.Comment ]
-        }
-    },
-    contribution: {
-        asked: Boolean,
-        answered: Boolean,
-        commented: Boolean,
-        votedDown: Boolean,
-        accepted: Boolean
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-});
+﻿var mongoose   = require("mongoose"),
+    bcrypt     = require("bcrypt-nodejs"),
+    Schema     = mongoose.Schema,
+    enums      = require("../config/enums"),
+    Reputation = require("./subDocuments/reputation");
 
 var UserSchema = Schema({
     local: {
@@ -81,10 +42,7 @@ var UserSchema = Schema({
         type: String,
         required: true
     },
-    avatar: {
-        type: Schema.Types.ObjectId,
-        ref: "File"
-    },
+    avatar: String,
     location: String,
     website: String,
     bio: String,
@@ -93,7 +51,7 @@ var UserSchema = Schema({
         year: Number,
         month: Number
     },
-    reputations: [ ReputationSchema ],
+    reputations: [ Reputation ],
     badges: [{
         type: Schema.Types.ObjectId,
         ref: "Badge"

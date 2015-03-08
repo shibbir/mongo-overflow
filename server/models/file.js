@@ -25,10 +25,6 @@ var FileSchema = Schema({
     date: {
         type: Date,
         default: Date.now
-    },
-    modifiedDate: {
-        type: Date,
-        default: Date.now
     }
 });
 

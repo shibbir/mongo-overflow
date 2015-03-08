@@ -1,0 +1,39 @@
+<div>
+    <div class="ui comments">
+        <h3 class="ui dividing header">Comments</h3>
+        <div class="comment" ng-repeat="comment in comments">
+            <a class="avatar" ng-href="{{ comment.commenter.profileLink }}">
+                <img src="/assets/images/avatar.png" ng-src="{{ comment.commenter.avatar }}">
+            </a>
+            <div class="content">
+                <a ng-href="{{ comment.commenter.profileLink }}" class="author">{{ comment.commenter.displayName }}</a>
+                <div class="metadata">
+                    <span class="date">Today at 5:42PM</span>
+                </div>
+                <div class="text" ng-bind="comment.text"></div>
+                <div class="actions">
+                    <a class="reply">Reply</a>
+                </div>
+            </div>
+        </div>
+        <form class="ui reply form" name="commentForm" novalidate>
+            <div class="field">
+                <textarea placeholder="Ask for more information or suggest improvements. Avoid answering questions in comments."
+                    required minlength="15"
+                    name="comment"
+                    ng-model="comment">
+                </textarea>
+                <div ng-messages="commentForm.comment.$error" ng-if="commentForm.submitted">
+                    <div class="ui red pointing prompt label transition visible" ng-message="required">Comment cannot be empty.</div>
+                    <div class="ui red pointing prompt label transition visible" ng-message="minlength">
+                        Comment is too short. (Minimum 15 characters required)
+                    </div>
+                </div>
+            </div>
+            <div class="ui blue labeled submit icon button" ng-click="addComment(comment)">
+                <i class="icon comments"></i> Add Comment
+            </div>
+            Enter at least 15 characters
+        </form>
+    </div>
+</div>

@@ -55,6 +55,7 @@ textarea {
 }
 
 #question .question-description-container {
+    min-height: 150px;
     margin-bottom: 10px;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -117,4 +118,8 @@ hr {
 
 #tags-container .card .description {
     height: 85px !important;
+}
+
+.ui.comments .reply.form textarea {
+    height: 8em;
 }

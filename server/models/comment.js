@@ -2,7 +2,18 @@ var mongoose = require("mongoose"),
     Schema   = mongoose.Schema;
 
 var CommentSchema = Schema({
-    text: String,
+    text: {
+        type: String,
+        required: true
+    },
+    question: {
+        type: Schema.Types.ObjectId,
+        ref: "Question"
+    },
+    parentId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     commenter: {
         type: Schema.Types.ObjectId,
         ref: "User"

@@ -18,10 +18,6 @@ var QuestionSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }],
     answers: [{
         type: Schema.Types.ObjectId,
         ref: "Answer"

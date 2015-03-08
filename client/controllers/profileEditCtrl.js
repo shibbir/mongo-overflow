@@ -11,7 +11,7 @@
                 }
 
                 var uploadConfig = {
-                    url: configService.baseApiUrl + "/users/changeAvatar",
+                    url: configService.baseApiUrl + "users/changeAvatar",
                     method: "PATCH",
                     file: file
                 };
@@ -61,7 +61,7 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.patch(configService.baseApiUrl + "/users/" + user._id, user).success(function() {
+                httpService.patch(configService.baseApiUrl + "users/" + user._id, user).success(function() {
                     notifierService.notifySuccess("Information Updated!");
                 });
             }
@@ -81,7 +81,7 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.patch(configService.baseApiUrl + "/users/changePassword", this.data).success(function() {
+                httpService.patch(configService.baseApiUrl + "users/changePassword", this.data).success(function() {
                     notifierService.notifySuccess("Password Updated!");
                     ctrl.data = {};
                     delete ctrl.form.submitted;

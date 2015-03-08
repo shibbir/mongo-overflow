@@ -1,7 +1,6 @@
 var _                 = require("lodash"),
     moment            = require("moment"),
     validator         = require("validator"),
-    fileService       = require("../services/fileService"),
     utilityService    = require("../services/utilityService"),
     userRepository    = require("../repositories/userRepository"),
     reputationService = require("../services/reputationService");
@@ -34,7 +33,6 @@ var getUser = function(req, res) {
     userRepository
         .find(req.params.id)
         .select("local.name local.email displayName avatar location website bio birthday views date reputations")
-        .populate("avatar", "fileName")
         .exec(function(err, doc) {
             if(err) {
                 return res.sendStatus(500);
@@ -43,7 +41,7 @@ var getUser = function(req, res) {
             doc = doc.toObject();
 
             if(doc.avatar) {
-                doc.avatar = utilityService.getProtocol(req) + "://" + "localhost:7070" + "/uploads/" + doc.avatar.fileName;
+                doc.avatar = utilityService.getProtocol(req) + "://" + "localhost:7070" + "/uploads/" + doc.avatar;
             }
 
             res.status(200).json(formatUserViewModel(doc));
@@ -96,18 +94,12 @@ var changeAvatar = function(req, res) {
         return res.sendStatus(400);
     }
 
-    fileService.add(req.files.file, function(err, doc) {
+    userRepository.update({ _id: req.user.id }, { $set: { avatar: req.files.file.name }}, null, function(err) {
         if(err) {
             return res.sendStatus(500);
         }
 
-        userRepository.update({ _id: req.user.id }, { $set: { avatar: doc._id }}, null, function(err) {
-            if(err) {
-                return res.sendStatus(500);
-            }
-
-            res.sendStatus(200);
-        });
+        res.sendStatus(200);
     });
 };
 

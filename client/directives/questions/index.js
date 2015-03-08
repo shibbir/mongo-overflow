@@ -28,7 +28,7 @@
                             sort: queryStrings.sort
                         }
                     };
-                    httpService.get(configService.baseApiUrl + "/questions", config).success(function(response) {
+                    httpService.get(configService.baseApiUrl + "questions", config).success(function(response) {
                         $scope.questions = response.data;
                         $scope.initPagination(response.pagination);
                     });

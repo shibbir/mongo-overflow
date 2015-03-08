@@ -3,6 +3,7 @@ var _        = require("lodash"),
     User     = require("../models/user"),
     faker    = require("Faker"),
     async    = require("async"),
+    enums    = require("../config/enums"),
     Badge    = require("../models/badge"),
     Answer   = require("../models/answer"),
     Comment  = require("../models/comment"),
@@ -100,7 +101,7 @@ var userSeeder = function(callback) {
         var user = new User();
 
         user.local.name = faker.Name.findName();
-        user.displayName = _.kebabCase(user.local.name);
+        user.displayName = user.local.name;
         user.local.email = faker.Internet.email();
         user.local.password = user.generateHash("123456");
         user.location = faker.Address.ukCountry();
@@ -113,10 +114,11 @@ var userSeeder = function(callback) {
     }, function() {
         var user = new User();
         user.local.name = "Administrator";
+        user.displayName = "Administrator";
         user.local.email = "admin@mongo-overflow.com";
         user.local.password = user.generateHash("admin");
         user.location = "Mars";
-        user.role = "admin";
+        user.role = enums.role.Admin;
 
         user.save(function(err, doc) {
             users.push(doc);
@@ -138,8 +140,7 @@ var questionSeeder = function(callback) {
             title: faker.Lorem.sentence(),
             description: faker.Lorem.paragraphs(5),
             creator: users[ _.random(0, numOfUsers - 1) ]._id,
-            tags: randomSelector(tags),
-            comments: randomSelector(comments)
+            tags: randomSelector(tags)
         }).save(function(err, question) {
             questions.push(question);
             async.each(question.tags, function(tag, innerAsyncCallback) {
@@ -164,9 +165,13 @@ var commentSeeder = function(callback) {
     }
 
     async.each(array, function(idx, asyncCallback) {
+        var question = questions[ _.random(0, numOfQuestions - 1) ]._id;
+
         new Comment({
             text: faker.Lorem.sentences(_.random(1, 3)),
-            commenter: users[ _.random(0, numOfUsers - 1) ]._id
+            commenter: users[ _.random(0, numOfUsers - 1) ]._id,
+            question: question,
+            parentId: question
         }).save(function(err, comment) {
             comments.push(comment);
             asyncCallback();
@@ -188,7 +193,6 @@ var answerSeeder = function(callback) {
         new Answer({
             text: faker.Lorem.sentences(_.random(1, 3)),
             creator: users[ _.random(0, numOfUsers - 1) ]._id,
-            comments: randomSelector(comments),
             question: questions[ _.random(0, numOfQuestions - 1) ]._id
         }).save(function() {
             asyncCallback();
@@ -201,7 +205,7 @@ var answerSeeder = function(callback) {
 exports.seed = function () {
     "use strict";
 
-    async.series([ userSeeder, tagSeeder, badgeSeeder, commentSeeder, questionSeeder, answerSeeder], function(err, messages) {
+    async.series([ userSeeder, tagSeeder, badgeSeeder, questionSeeder, commentSeeder, answerSeeder], function(err, messages) {
         _.forEach(messages, function(message) {
             console.info(message);
         });

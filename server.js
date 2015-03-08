@@ -26,9 +26,10 @@ app.use(function(req, res, next) {
 
 require("./server/routes/pages")(app);
 require("./server/routes/auth")(app, passport);
-require("./server/routes/questions")(app);
-require("./server/routes/users")(app);
-require("./server/routes/tags")(app);
+require("./server/routes/question")(app);
+require("./server/routes/comment")(app);
+require("./server/routes/user")(app);
+require("./server/routes/tag")(app);
 
 //require("./server/config/seeder").seed();
 

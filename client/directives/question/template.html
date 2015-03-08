@@ -29,12 +29,12 @@
         </div>
         <div class="ten wide column">
             <div class="question-description-container" ng-bind="question.description"></div>
-            <div class="tag-container">
+            <div class="tag-container" ng-if="question.tags.length">
                 <span ng-repeat="tag in question.tags">
                     <a class="ui green tag label" ng-href="/tags/{{tag._id}}">{{ tag.name }}</a>
                 </span>
             </div>
-            <div class="ui grid">
+            <div class="ui grid" style="margin-bottom: 10px;">
                 <div class="ten wide column">
                     <a>Share</a> |
                     <a ng-href="/questions/{{question._id}}/edit" title="Revise and improve this post">Edit</a> |
@@ -47,6 +47,7 @@
                     <a ng-href="/users/{{question.creator._id}}">{{ question.creator.name }}</a>
                 </div>
             </div>
+            <comments id="question._id" ng-if="question"></comments>
         </div>
     </div>
 </div>

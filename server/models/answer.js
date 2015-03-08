@@ -19,10 +19,6 @@ var AnswerSchema = Schema({
         type: String,
         enum: ["accepted"]
     },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }],
     upVotes: [{
         type: Schema.Types.ObjectId,
         ref: "User"

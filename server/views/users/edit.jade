@@ -4,7 +4,7 @@ block content
 
     div.ui.grid
         div.three.wide.column(ng-controller="AvatarUploadCtrl as ctrl")
-            img.ui.image(src="/assets/images/avatar.png", alt="Profile Picture", ng-src="{{ ctrl.user.avatar.url }}")
+            img.ui.image(src="/assets/images/avatar.png", alt="Profile Picture", ng-src="{{ ctrl.user.avatar }}")
             br
 
             label.ui.button(for="file")
