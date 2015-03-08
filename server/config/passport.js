@@ -38,7 +38,7 @@ module.exports = function(passport) {
                     return done(null, false);
                 }
 
-                if(!user.validPassword(password)) {
+                if(!user.local.password || !user.validPassword(password)) {
                     return done(null, false);
                 }
 

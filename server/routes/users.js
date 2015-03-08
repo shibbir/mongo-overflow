@@ -13,4 +13,7 @@ module.exports = function(app) {
     app.route("/api/users/:id")
         .get(userService.getUser)
         .patch(authentication.requiresLogin, userService.updateInfo);
+
+    app.route("/api/users/:id/views")
+        .patch(authentication.requiresLogin, userService.addViewer);
 };

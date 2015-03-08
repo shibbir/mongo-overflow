@@ -24,7 +24,7 @@ block content
                 div.field.required
                     label Email
                     div.ui.input
-                        input(type="email", placeholder="Email", name="email", ng-model="ctrl.user.local.email", required)
+                        input(type="email", placeholder="Email", name="email", ng-model="ctrl.user.email", required)
                     div(ng-messages="ctrl.form.email.$error", ng-if="ctrl.form.email.$touched || ctrl.form.submitted")
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your email address
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="email") The email entered is not valid
@@ -32,7 +32,7 @@ block content
                 div.field.required
                     label Real Name
                     div.ui.input
-                        input(type="text", placeholder="Your real name", name="name", ng-model="ctrl.user.local.name", required)
+                        input(type="text", placeholder="Your real name", name="name", ng-model="ctrl.user.name", required)
                     div(ng-messages="ctrl.form.name.$error", ng-if="ctrl.form.name.$touched || ctrl.form.submitted")
                         div.ui.red.pointing.prompt.label.transition.visible(ng-message="required") Please enter your real name
 

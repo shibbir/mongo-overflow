@@ -1,9 +1,10 @@
-var _              = require("lodash"),
-    moment         = require("moment"),
-    validator      = require("validator"),
-    fileService    = require("../services/fileService"),
-    utilityService = require("../services/utilityService"),
-    userRepository = require("../repositories/userRepository");
+var _                 = require("lodash"),
+    moment            = require("moment"),
+    validator         = require("validator"),
+    fileService       = require("../services/fileService"),
+    utilityService    = require("../services/utilityService"),
+    userRepository    = require("../repositories/userRepository"),
+    reputationService = require("../services/reputationService");
 
 var formatUserViewModel = function(user) {
     "use strict";
@@ -20,6 +21,10 @@ var formatUserViewModel = function(user) {
         delete user.local;
     }
 
+    user.points = reputationService.getPoints(user._id, user.reputations);
+
+    delete user.reputations;
+
     return user;
 };
 
@@ -28,7 +33,7 @@ var getUser = function(req, res) {
 
     userRepository
         .find(req.params.id)
-        .select("local.name local.email displayName avatar location website bio birthday views date")
+        .select("local.name local.email displayName avatar location website bio birthday views date reputations")
         .populate("avatar", "fileName")
         .exec(function(err, doc) {
             if(err) {
@@ -43,6 +48,21 @@ var getUser = function(req, res) {
 
             res.status(200).json(formatUserViewModel(doc));
         });
+};
+
+var addViewer = function(req, res) {
+    "use strict";
+
+    if(req.params.id.toString() === req.user.id.toString()) {
+        return res.sendStatus(200);
+    }
+
+    userRepository.findByIdAndUpdate(req.params.id, { $addToSet: { views: req.user.id }}, function(err, doc) {
+        if(err) {
+            return res.sendStatus(500);
+        }
+        res.status(200).json(doc.views);
+    });
 };
 
 var updateInfo = function(req, res) {
@@ -113,5 +133,6 @@ var changePassword = function(req, res) {
 
 exports.getUser = getUser;
 exports.updateInfo = updateInfo;
+exports.addViewer = addViewer;
 exports.changeAvatar = changeAvatar;
 exports.changePassword = changePassword;

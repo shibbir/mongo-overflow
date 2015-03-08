@@ -139,8 +139,7 @@ var upVote = function(req, res) {
                     res.status(200).json(data);
                 });
             } else {
-                reputationService.push({
-                    contributor: doc.creator,
+                reputationService.push(doc.creator, {
                     appreciator: req.user.id,
                     question: req.params.id,
                     reputationType: "upVote",
@@ -194,8 +193,7 @@ var downVote = function(req, res) {
                     res.status(200).json(data);
                 });
             } else {
-                reputationService.push({
-                    contributor: doc.creator,
+                reputationService.push(doc.creator, {
                     appreciator: req.user.id,
                     question: req.params.id,
                     reputationType: "downVote",

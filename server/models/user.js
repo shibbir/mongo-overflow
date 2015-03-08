@@ -1,6 +1,47 @@
 ﻿var mongoose = require("mongoose"),
     bcrypt   = require("bcrypt-nodejs"),
-    Schema   = mongoose.Schema;
+    Schema   = mongoose.Schema,
+    enums    = require("../config/enums");
+
+var ReputationSchema = Schema({
+    contributor: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    appreciator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    question: {
+        type: Schema.Types.ObjectId,
+        ref: "Question",
+        required: true
+    },
+    reputationType: {
+        type: String,
+        enum: [ enums.reputation.UpVote, enums.reputation.DownVote, enums.reputation.Accepted ]
+    },
+    area: {
+        id: Schema.Types.ObjectId,
+        type: {
+            type: String,
+            enum: [ enums.reputation.Question, enums.reputation.Answer, enums.reputation.Comment ]
+        }
+    },
+    contribution: {
+        asked: Boolean,
+        answered: Boolean,
+        commented: Boolean,
+        votedDown: Boolean,
+        accepted: Boolean
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
 
 var UserSchema = Schema({
     local: {
@@ -52,18 +93,15 @@ var UserSchema = Schema({
         year: Number,
         month: Number
     },
-    reputations: [{
-        type: Schema.Types.ObjectId,
-        ref: "Reputation"
-    }],
+    reputations: [ ReputationSchema ],
     badges: [{
         type: Schema.Types.ObjectId,
         ref: "Badge"
     }],
     role: {
         type: String,
-        enum: ["basic", "moderator", "admin"],
-        default: "basic"
+        enum: [ enums.role.Basic, enums.role.Moderator, enums.role.Admin ],
+        default: enums.role.Basic
     },
     views: [{
         type: Schema.Types.ObjectId,
@@ -77,12 +115,12 @@ var UserSchema = Schema({
 
 UserSchema.methods.isAdmin = function() {
     "use strict";
-    return this.roles.indexOf("admin") !== -1;
+    return this.roles.indexOf(enums.role.Admin) !== -1;
 };
 
 UserSchema.methods.isModerator = function() {
     "use strict";
-    return this.roles.indexOf("moderator") !== -1;
+    return this.roles.indexOf(enums.role.Moderator) !== -1;
 };
 
 UserSchema.methods.generateHash = function(password) {
