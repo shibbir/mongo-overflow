@@ -18,7 +18,7 @@ var addComment = function(req, res) {
 
         doc = doc.toObject();
         doc.commenter = {
-            name: req.user.displayName,
+            displayName: req.user.displayName,
             avatar: req.user.avatar
         };
 

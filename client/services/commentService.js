@@ -8,6 +8,8 @@
                 comment.commenter.avatar = "/uploads/" + comment.commenter.avatar;
             }
 
+            comment.date = moment(comment.date).calendar();
+
             return comment;
         };
 

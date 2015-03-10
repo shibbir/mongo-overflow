@@ -8,12 +8,10 @@
             <div class="content">
                 <a ng-href="{{ comment.commenter.profileLink }}" class="author">{{ comment.commenter.displayName }}</a>
                 <div class="metadata">
-                    <span class="date">Today at 5:42PM</span>
+                    <span class="date" ng-bind="comment.date"></span>
                 </div>
                 <div class="text" ng-bind="comment.text"></div>
-                <div class="actions">
-                    <a class="reply">Reply</a>
-                </div>
+
             </div>
         </div>
         <form class="ui reply form" name="commentForm" novalidate>
