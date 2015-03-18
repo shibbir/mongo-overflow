@@ -5,7 +5,7 @@ module.exports = function(app) {
     "use strict";
 
     app.route("/").get(function(req, res) {
-        res.render("pages/home");
+        res.render("layouts/master");
     });
 
     app.route("/tags").get(function(req, res) {

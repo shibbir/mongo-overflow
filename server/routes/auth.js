@@ -3,26 +3,6 @@ var authentication = require("./middlewares/authentication");
 module.exports = function(app, passport) {
     "use strict";
 
-    app.route("/auth/register")
-        .get(authentication.requireAnonymous, function(req, res) {
-            res.render("auth/register", { error: req.flash("error") });
-        })
-        .post(authentication.requireAnonymous, passport.authenticate("local-signup", {
-            successRedirect: "/",
-            failureRedirect: "/auth/register",
-            failureFlash: true
-        }));
-
-    app.route("/auth/login")
-        .get(authentication.requireAnonymous, function(req, res) {
-            res.render("auth/login", { error: req.flash("error") });
-        })
-        .post(authentication.requireAnonymous, passport.authenticate("local-login", {
-            successRedirect: "/",
-            failureRedirect: "/auth/login",
-            failureFlash: "Invalid username or password."
-        }));
-
     app.route("/auth/facebook").get(authentication.requireAnonymous, passport.authenticate("facebook", { scope : "email" }));
 
     app.route("/auth/facebook/callback").get(authentication.requireAnonymous, passport.authenticate("facebook", {
@@ -43,9 +23,4 @@ module.exports = function(app, passport) {
         successRedirect: "/",
         failureRedirect: "/auth/login"
     }));
-
-    app.route("/auth/logout").get(authentication.requiresLogin, function(req, res) {
-        req.logout();
-        res.redirect("/");
-    });
 };

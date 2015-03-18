@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("tags", ["baseService", "httpService", "configService", function(baseService, httpService, configService) {
+    app.directive("tags", ["baseService", "httpService", "configuration", function(baseService, httpService, configuration) {
         return {
             restrict: "E",
             replace: true,
@@ -28,7 +28,7 @@
                             sort: queryStrings.sort
                         }
                     };
-                    httpService.get(configService.baseApiUrl + "/tags", config).success(function(response) {
+                    httpService.get(configuration.getBaseApiUrl() + "tags", config).success(function(response) {
                         $scope.tags = response.data;
                         $scope.initPagination(response.pagination);
                     });

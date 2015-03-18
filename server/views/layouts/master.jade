@@ -11,15 +11,16 @@ html
         link(rel='stylesheet', href='/assets/bower_components/semantic-ui/dist/semantic.css')
         link(rel='stylesheet', href='/assets/css/site.css')
     body(ng-app="mongoOverflow", ng-strict-di)
-        div(ng-controller="BaseCtrl")
-            include ../common/topBar
+        div(ng-controller="BaseCtrl as base")
+            top-bar
             div.container
                 include ../common/navigation
-                block content
+                div(ng-view)
             include ../common/footer
 
         script(src='/assets/bower_components/jquery/dist/jquery.js')
         script(src='/assets/bower_components/angular/angular.js')
+        script(src='/assets/bower_components/angular-route/angular-route.js')
         script(src='/assets/bower_components/angular-messages/angular-messages.js')
         script(src='/assets/bower_components/ng-file-upload/angular-file-upload.js')
         script(src='/assets/bower_components/socket.io-client/socket.io.js')
@@ -30,14 +31,17 @@ html
 
         script(src='/app.js')
 
+        script(src='/providers/configurationProvider.js')
+        script(src='/providers/identityProvider.js')
+
         script(src='/services/baseService.js')
-        script(src='/services/configService.js')
         script(src='/services/httpService.js')
         script(src='/services/fileService.js')
         script(src='/services/notifierService.js')
         script(src='/services/tagService.js')
         script(src='/services/commentService.js')
 
+        script(src='/directives/topBar/index.js')
         script(src='/directives/questions/index.js')
         script(src='/directives/question/index.js')
         script(src='/directives/comments/index.js')

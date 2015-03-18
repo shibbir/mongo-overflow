@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("questions", ["baseService", "httpService", "configService", function(baseService, httpService, configService) {
+    app.directive("questions", ["baseService", "httpService", "configuration", function(baseService, httpService, configuration) {
         return {
             restrict: "E",
             replace: true,
@@ -28,7 +28,7 @@
                             sort: queryStrings.sort
                         }
                     };
-                    httpService.get(configService.baseApiUrl + "questions", config).success(function(response) {
+                    httpService.get(configuration.getBaseApiUrl() + "questions", config).success(function(response) {
                         $scope.questions = response.data;
                         $scope.initPagination(response.pagination);
                     });

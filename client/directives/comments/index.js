@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.directive("comments", ["httpService", "configService", "commentService", function(httpService, configService, commentService) {
+    app.directive("comments", ["httpService", "configuration", "commentService", function(httpService, configuration, commentService) {
         return {
             restrict: "E",
             replace: true,
@@ -13,7 +13,7 @@
                 $scope.comments = [];
 
                 $scope.getComments = function() {
-                    httpService.get(configService.baseApiUrl + "parents/" + $scope.id + "/comments/").success(function(data) {
+                    httpService.get(configuration.getBaseApiUrl() + "parents/" + $scope.id + "/comments/").success(function(data) {
                         _.forEach(data, function(e) {
                             e = commentService.formatComment(e);
                         });
@@ -29,7 +29,7 @@
                     };
 
                     if($scope.commentForm.$valid) {
-                        httpService.post(configService.baseApiUrl + "parents/" + $scope.id + "/comments/", data).success(function (data) {
+                        httpService.post(configuration.getBaseApiUrl() + "parents/" + $scope.id + "/comments/", data).success(function (data) {
                             $scope.comments.push(commentService.formatComment(data));
                             comment = "";
                         });

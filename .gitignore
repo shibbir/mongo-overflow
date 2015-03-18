@@ -2,6 +2,5 @@
 .idea
 bower_components
 node_modules
-build
 uploads
 .DS_Store

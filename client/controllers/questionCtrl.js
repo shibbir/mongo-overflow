@@ -1,7 +1,7 @@
 (function(app) {
     "use strict";
 
-    app.controller("QuestionCtrl", ["httpService", "configService", function(httpService, configService) {
+    app.controller("QuestionCtrl", ["httpService", "configuration", "$location", function(httpService, configuration, $location) {
         this.form = this.form || {};
         this.question = {};
 
@@ -9,8 +9,8 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.post(configService.baseApiUrl + "/questions", question).success(function(data) {
-                    window.location = "/questions/" + data._id;
+                httpService.post(configuration.getBaseApiUrl() + "/questions", question).success(function(data) {
+                    $location.path("/questions/" + data._id);
                 });
             }
         };

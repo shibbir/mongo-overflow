@@ -1,0 +1,33 @@
+<div class="ui fixed menu">
+    <div class="container">
+        <div class="title item active">
+            <a ng-href="#/">
+                <b>MongoOverflow</b>
+            </a>
+        </div>
+        <div class="right menu">
+            <a class="item" ng-href="#/users/{{loggedInUser._id}}/{{loggedInUser.seoName}}" ng-if="loggedInUser">
+                <i class="user icon"></i>
+                <span ng-bind="loggedInUser.name"></span>
+            </a>
+            <a class="item" ng-click="base.logout()" ng-if="loggedInUser">
+                <i class="sign out icon"></i>
+                <span>Logout</span>
+            </a>
+            <a class="item" ng-href="#/login" ng-if="!loggedInUser">
+                <i class="sign in icon"></i>
+                <span>Login</span>
+            </a>
+            <a class="item" ng-href="#/register" ng-if="!loggedInUser">
+                <i class="sign in icon"></i>
+                <span>Sign Up</span>
+            </a>
+            <div class="item">
+                <div class="ui transparent icon input">
+                    <input placeholder="Search..." type="text" />
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
