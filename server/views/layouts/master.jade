@@ -14,7 +14,7 @@ html
         div(ng-controller="BaseCtrl as base")
             top-bar
             div.container
-                include ../common/navigation
+                navigation
                 div(ng-view)
             include ../common/footer
 
@@ -42,6 +42,7 @@ html
         script(src='/services/commentService.js')
 
         script(src='/directives/topBar/index.js')
+        script(src='/directives/navigation/index.js')
         script(src='/directives/questions/index.js')
         script(src='/directives/question/index.js')
         script(src='/directives/comments/index.js')
@@ -51,5 +52,5 @@ html
         script(src='/controllers/baseCtrl.js')
         script(src='/controllers/account/registerCtrl.js')
         script(src='/controllers/account/loginCtrl.js')
-        script(src='/controllers/questionCtrl.js')
+        script(src='/question/addCtrl.js')
         script(src='/controllers/profileEditCtrl.js')

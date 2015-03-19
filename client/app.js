@@ -31,6 +31,17 @@
     ]);
 
     angular.module("mongoOverflow").config(["$routeProvider", function($routeProvider) {
+        var resolve = {
+            authentication: ["$q", "identity", function($q, identityProvider) {
+                var defer = $q.defer();
+                if(!identityProvider.getAccessToken()) {
+                    defer.reject();
+                } else {
+                    defer.resolve();
+                }
+                return defer.promise;
+            }]
+        };
         $routeProvider
             .when("/", {
                 templateUrl: "/templates/home.html"
@@ -39,17 +50,26 @@
                 templateUrl: "/templates/login.html",
                 controller: "LoginCtrl"
             })
+            .when("/questions/ask", {
+                templateUrl: "/question/add.html",
+                controller: "QuestionAddCtrl",
+                resolve: resolve
+            })
             .otherwise({ redirectTo: "/" });
         }
     ]);
 
-    angular.module("mongoOverflow").run(["identity", "$rootScope", function(identityProvider, $rootScope) {
+    angular.module("mongoOverflow").run(["identity", "$rootScope", "$location", function(identityProvider, $rootScope, $location) {
         if(identityProvider.getAccessToken()) {
             $rootScope.loggedInUser = identityProvider.getLoggedInUser();
         }
 
+        $rootScope.$on("$routeChangeError", function() {
+            $location.path("/login");
+        });
+
         $rootScope.$on("$locationChangeStart", function() {
-            if (identityProvider.getAccessToken()) {
+            if(identityProvider.getAccessToken()) {
                 $rootScope.loggedInUser = identityProvider.getLoggedInUser();
             } else {
                 delete $rootScope.loggedInUser;
