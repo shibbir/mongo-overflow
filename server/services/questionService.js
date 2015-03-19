@@ -1,7 +1,6 @@
 var Tag                = require("../models/tag"),
     _                  = require("lodash"),
     Question           = require("../models/question"),
-    validator          = require("validator"),
     reputationService  = require("./reputationService"),
     questionRepository = require("../repositories/questionRepository");
 
@@ -60,23 +59,6 @@ var getQuestions = function(req, res) {
                 }
             });
         });
-    });
-};
-
-var postQuestion = function(req, res) {
-    "use strict";
-
-    var model = {
-        title: validator.escape(req.body.title),
-        description: validator.escape(req.body.description),
-        creator: req.user.id
-    };
-
-    questionRepository.insert(model, function(err, doc) {
-        if(err) {
-            return res.sendStatus(500);
-        }
-        res.status(200).json(doc);
     });
 };
 
@@ -245,7 +227,6 @@ var getCountByQuery = function(query, callback) {
 
 exports.getQuestion = getQuestion;
 exports.getQuestions = getQuestions;
-exports.postQuestion = postQuestion;
 exports.upVote = upVote;
 exports.downVote = downVote;
 exports.pushFavorite = pushFavorite;
