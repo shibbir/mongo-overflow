@@ -1,7 +1,8 @@
 (function(app) {
     "use strict";
 
-    app.controller("QuestionAddCtrl", ["httpService", "configuration", "$location", function(httpService, configuration, $location) {
+    app.controller("QuestionAddCtrl", ["httpService", "configuration", "$location", "identity",
+        function(httpService, configuration, $location, identity) {
         var ctrl = this;
         this.form = this.form || {};
         this.question = {};
@@ -10,10 +11,15 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.post(configuration.getBaseApiUrl() + "questions", question).success(function(data) {
+                var config = {
+                    params: {
+                        access_token: identity.getAccessToken()
+                    }
+                };
+                httpService.post(configuration.getBaseApiUrl() + "questions", question, config).success(function(data) {
                     $location.path("/questions/" + data._id);
                 }).error(function(err) {
-                    ctrl.error = err;
+                    ctrl.errors = err.messages;
                 });
             }
         };
