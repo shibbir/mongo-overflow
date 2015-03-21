@@ -15,8 +15,8 @@ html
             top-bar
             div.container
                 navigation
-                div(ng-view)
-            include ../common/footer
+                div.content(ng-view)
+            include common/footer
 
         script(src='/assets/bower_components/jquery/dist/jquery.js')
         script(src='/assets/bower_components/angular/angular.js')
@@ -48,9 +48,12 @@ html
         script(src='/directives/comments/index.js')
         script(src='/directives/tags/index.js')
         script(src='/directives/profile/index.js')
+        script(src='/directives/presenter/errorMessage.js')
 
         script(src='/controllers/baseCtrl.js')
-        script(src='/controllers/account/registerCtrl.js')
-        script(src='/controllers/account/loginCtrl.js')
+
         script(src='/question/addCtrl.js')
         script(src='/controllers/profileEditCtrl.js')
+
+        script(src='/account/loginCtrl.js')
+        script(src='/account/registrationCtrl.js')

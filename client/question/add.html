@@ -4,9 +4,8 @@
     <div ng-controller="QuestionAddCtrl as ctrl" class="ten wide column">
         <form name="ctrl.form" novalidate="novalidate" class="ui form">
 
-            <div class="ui negative message" ng-if="ctrl.errors">
-                <header>Your question couldn't be submitted. Please see the errors below.</header>
-                <p ng-repeat="error in ctrl.errors" ng-bind="error"></p>
+            <div ng-if="ctrl.errors">
+                <error-message messages="ctrl.errors"></error-message>
             </div>
 
             <div class="field required">

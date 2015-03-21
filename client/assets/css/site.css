@@ -7,6 +7,10 @@ body {
     margin: 0 auto;
 }
 
+.content {
+    padding-bottom: 15px;
+}
+
 textarea {
     resize: none !important;
 }

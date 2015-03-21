@@ -1,0 +1,70 @@
+<div ng-controller="RegistrationCtrl as ctrl">
+    <form name="ctrl.form" novalidate="novalidate" ng-submit="ctrl.register($event)" class="ui form">
+
+        <h3 class="ui dividing header">Register for a free account</h3>
+
+        <div ng-if="ctrl.errors">
+            <error-message messages="ctrl.errors"></error-message>
+        </div>
+
+        <br />
+
+        <div class="ui grid">
+            <div class="six wide column">
+                <div class="field required">
+                    <label>Email</label>
+                    <div class="ui input">
+                        <input type="email" placeholder="Email" name="email" ng-model="ctrl.email" required="required"/>
+                    </div>
+                    <div ng-messages="ctrl.form.email.$error" ng-if="ctrl.form.email.$touched || ctrl.form.submitted">
+                        <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your email address</div>
+                        <div ng-message="email" class="ui red pointing prompt label transition visible">The email entered is not valid</div>
+                    </div>
+                </div>
+
+                <div class="field required">
+                    <label>Name</label>
+                    <div class="ui input">
+                        <input type="text" placeholder="Your public display name" name="name" ng-model="ctrl.name" required="required"/>
+                    </div>
+                    <div ng-messages="ctrl.form.name.$error" ng-if="ctrl.form.name.$touched || ctrl.form.submitted">
+                        <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your name</div>
+                    </div>
+                </div>
+
+                <div class="field required">
+                    <label>Password</label>
+                    <div class="ui input">
+                        <input type="password" placeholder="Password" name="password" ng-model="ctrl.password" required="required" minlength="5"/>
+                    </div>
+                    <div ng-messages="ctrl.form.password.$error" ng-if="ctrl.form.password.$touched || ctrl.form.submitted">
+                        <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your password</div>
+                        <div ng-message="minlength" class="ui red pointing prompt label transition visible">The password is too short (Minimum 5 characters required)</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="ui submit button">Register</button>
+            </div>
+
+            <div class="twelve.wide.column">
+                <h3 class="ui dividing header">Or, Sign up using any of the following services:</h3>
+                <a href="/auth/facebook" class="ui facebook button">
+                    <i class="icon facebook"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="/auth/twitter" class="ui twitter button">
+                    <i class="icon twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="/auth/google" class="ui google plus button">
+                    <i class="icon google"></i>
+                    <span>Google</span>
+                </a>
+                <a href="/auth/github" class="ui instagram button">
+                    <i class="icon github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

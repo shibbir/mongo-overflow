@@ -3,26 +3,10 @@
 
     angular.module("mongoOverflow", ["ngRoute", "ngMessages", "angularFileUpload"]);
 
-    angular.module("mongoOverflow").config(["$httpProvider", "$compileProvider", "configurationProvider", "identityProvider",
-        function($httpProvider, $compileProvider, configurationProvider, identityProvider) {
+    angular.module("mongoOverflow").config(["$httpProvider", "$compileProvider", "configurationProvider",
+        function($httpProvider, $compileProvider, configurationProvider) {
             delete $httpProvider.defaults.headers.common["X-Requested-With"];
             $compileProvider.debugInfoEnabled(false);
-
-            $httpProvider.interceptors.push(["$q", "$location", function($q, $location) {
-                return {
-                    response: function(response) {
-                        return response;
-                    },
-                    responseError: function(response) {
-                        if(response.status === 401) {
-                            identityProvider.clearAccessToken();
-                            identityProvider.clearLoggedInUser();
-                            $location.path("/login");
-                        }
-                        return $q.reject(response);
-                    }
-                };
-            }]);
 
             configurationProvider.setBaseApiUrl("http://localhost:7575/api/");
             configurationProvider.setImageUploadSize(1024 * 1024 * 2);
@@ -47,8 +31,12 @@
                 templateUrl: "/templates/home.html"
             })
             .when("/login", {
-                templateUrl: "/templates/login.html",
+                templateUrl: "/account/login.html",
                 controller: "LoginCtrl"
+            })
+            .when("/register", {
+                templateUrl: "/account/register.html",
+                controller: "RegistrationCtrl"
             })
             .when("/questions/ask", {
                 templateUrl: "/question/add.html",
