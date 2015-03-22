@@ -1,32 +1,16 @@
 # MongoOverflow
-A lightweight version of stackoverflow built with MEAN stack
+A lightweight version of stackoverflow built with node.js
 
-Tools and Technology used in this project:
+Built with these awesome tools:
 
 * [Node.js](http://nodejs.org/)
 * [Express](http://expressjs.com/)
-* [MongoDB](http://www.mongodb.org/)
 * [Socket.IO](http://socket.io/)
 * [Angular.js](https://angularjs.org/)
 * [Semantic UI](http://semantic-ui.com/)
 
-Running Unit Tests
-====================
-
-Install mocha globally:
-
-```bash
-$ npm install -g mocha
-```
-
-Then, Run Tests:
-
-```bash
-$ mocha
-```
-
 Running End To End Tests
-====================
+========================
 
 Install Protractor globally:
 
@@ -45,3 +29,7 @@ Run Test:
 ```bash
 protractor client/test/e2e/conf.js
 ```
+
+License
+=======
+MongoOverflow is released under the [**MIT License**](http://www.opensource.org/licenses/MIT).
