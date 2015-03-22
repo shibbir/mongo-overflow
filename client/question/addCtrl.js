@@ -1,8 +1,8 @@
 (function(app) {
     "use strict";
 
-    app.controller("QuestionAddCtrl", ["httpService", "configuration", "$location", "identity",
-        function(httpService, configuration, $location, identity) {
+    app.controller("QuestionAddCtrl", ["httpService", "configuration", "$location", "identityService",
+        function(httpService, configuration, $location, identityService) {
         var ctrl = this;
         this.form = this.form || {};
         this.question = {};
@@ -13,7 +13,7 @@
             if(this.form.$valid) {
                 var config = {
                     params: {
-                        access_token: identity.getAccessToken()
+                        access_token: identityService.getAccessToken()
                     }
                 };
                 httpService.post(configuration.getBaseApiUrl() + "questions", question, config).success(function(data) {

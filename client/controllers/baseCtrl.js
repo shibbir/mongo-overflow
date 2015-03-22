@@ -1,10 +1,10 @@
 (function(app) {
     "use strict";
 
-    app.controller("BaseCtrl", ["identity", "$rootScope", function(identity, $rootScope) {
+    app.controller("BaseCtrl", ["identityService", "$rootScope", function(identityService, $rootScope) {
         this.logout = function() {
-            identity.clearAccessToken();
-            identity.clearLoggedInUser();
+            identityService.clearAccessToken();
+            identityService.clearLoggedInUser();
 
             delete $rootScope.loggedInUser;
         };

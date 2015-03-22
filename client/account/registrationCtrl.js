@@ -1,8 +1,8 @@
 (function(app) {
     "use strict";
 
-    app.controller("RegistrationCtrl", ["httpService", "configuration", "identity", "$location",
-        function(httpService, configuration, identity, $location) {
+    app.controller("RegistrationCtrl", ["httpService", "configuration", "identityService", "$location",
+        function(httpService, configuration, identityService, $location) {
             var ctrl = this;
             this.form = this.form || {};
 
@@ -17,8 +17,8 @@
                     };
                     httpService.post(configuration.getBaseApiUrl() + "register", data).success(function(data) {
                         if(data.accessToken) {
-                            identity.saveAccessToken(data.accessToken);
-                            identity.saveLoggedInUser(data.user);
+                            identityService.saveAccessToken(data.accessToken);
+                            identityService.saveLoggedInUser(data.user);
                             $location.path("/");
                         }
                     }).error(function(err) {

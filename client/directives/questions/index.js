@@ -1,14 +1,14 @@
 (function(app) {
     "use strict";
 
-    app.directive("questions", ["baseService", "httpService", "configuration", function(baseService, httpService, configuration) {
+    app.directive("questions", ["urlService", "httpService", "configuration", function(urlService, httpService, configuration) {
         return {
             restrict: "E",
             replace: true,
             scope: {},
             templateUrl: "/directives/questions/template.html",
             link: function($scope) {
-                var queryStrings = baseService.getQueryStrings();
+                var queryStrings = urlService.getQueryStrings();
 
                 $scope.initPagination = function(pagination) {
                     $scope.pages = [];

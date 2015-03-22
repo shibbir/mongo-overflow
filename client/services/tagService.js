@@ -1,10 +1,10 @@
 (function(app) {
     "use strict";
 
-    app.factory("tagService", ["httpService", "configService", function(httpService, configService) {
+    app.factory("tagService", ["httpService", "configuration", function(httpService, configuration) {
 
         var getTags = function() {
-            return httpService.get(configService.baseApiUrl + "/tags");
+            return httpService.get(configuration.getBaseApiUrl() + "tags");
         };
 
         return {

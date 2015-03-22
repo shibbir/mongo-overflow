@@ -1,8 +1,8 @@
 (function(app) {
     "use strict";
 
-    app.provider("identity", ["configurationProvider", function(configuration) {
-        var browserStoragePrefix = configuration.$get().getBrowserStoragePrefix();
+    app.factory("identityService", ["httpService", "configuration", function(httpService, configuration) {
+        var browserStoragePrefix = configuration.getBrowserStoragePrefix();
 
         var saveLoggedInUser = function(user, persistent) {
             if(persistent) {
@@ -40,15 +40,24 @@
             sessionStorage.removeItem(browserStoragePrefix + "-accessToken");
         };
 
-        this.$get = function() {
-            return {
-                getLoggedInUser: getLoggedInUser,
-                saveLoggedInUser: saveLoggedInUser,
-                clearLoggedInUser: clearLoggedInUser,
-                getAccessToken: getAccessToken,
-                saveAccessToken: saveAccessToken,
-                clearAccessToken: clearAccessToken
+        var getUserByToken = function(token, provider) {
+            var config = {
+                params: {
+                    token: token,
+                    provider: provider
+                }
             };
+            return httpService.get(configuration.getBaseApiUrl() + "oauth/user", config);
+        };
+
+        return {
+            getLoggedInUser: getLoggedInUser,
+            saveLoggedInUser: saveLoggedInUser,
+            clearLoggedInUser: clearLoggedInUser,
+            getAccessToken: getAccessToken,
+            saveAccessToken: saveAccessToken,
+            clearAccessToken: clearAccessToken,
+            getUserByToken: getUserByToken
         };
     }]);
 })(angular.module("mongoOverflow"));
