@@ -22,9 +22,9 @@
                     <div class="content">
                         <a class="header">Bio</a>
                         <div class="description">
-                            <div>Website: <a ng-href="{{ ctrl.profile.website }}">{{ ctrl.profile.website }}</a></div>
-                            <div>Location: <span ng-bind="ctrl.profile.location"></span></div>
-                            <div>Age: <span ng-bind="ctrl.profile.age"></span></div>
+                            <div>Website: <a ng-href="{{ ctrl.profile.website }}">{{ ctrl.profile.website || "Not available" }}</a></div>
+                            <div>Location: <span ng-bind="ctrl.profile.location || 'Not available'"></span></div>
+                            <div>Age: <span ng-bind="ctrl.profile.age || 'Not available'"></span></div>
                         </div>
                     </div>
                 </div>

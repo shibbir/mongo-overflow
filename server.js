@@ -12,8 +12,6 @@ if(app.settings.env === "development") {
     app.locals.pretty = true;
 }
 
-require("./server/routes/pages")(app);
-
 app.route("/").get(function(req, res) {
     "use strict";
     res.render("index");

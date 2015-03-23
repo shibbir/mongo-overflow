@@ -1,0 +1,197 @@
+<h2 class="ui dividing header">Registered User</h2>
+
+<div class="ui grid">
+
+    <div ng-controller="AvatarUploadCtrl as ctrl" class="three wide column">
+
+        <img src="/assets/images/avatar.png" alt="Profile Picture" ng-src="{{ ctrl.user.avatar }}" class="ui image" />
+
+        <br/>
+
+        <label for="file" class="ui button"><span>Change Picture</span></label>
+        <input id="file" type="file" style="display:none;" multiple="multiple" accept="image/*"
+               ng-file-select
+               ng-file-change="ctrl.uploadAvatar($files)" />
+    </div>
+
+    <div ng-controller="ProfileEditCtrl as ctrl" class="six wide column">
+
+        <form name="ctrl.form" novalidate="novalidate" class="ui form">
+
+            <div class="field required">
+                <label>Display Name</label>
+                <div class="ui input">
+                    <input type="text" placeholder="Your public display name" name="displayName" ng-model="ctrl.user.displayName" required="required"/>
+                </div>
+                <div ng-messages="ctrl.form.displayName.$error" ng-if="ctrl.form.displayName.$touched || ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your display name</div>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label>Email</label>
+                <div class="ui input">
+                    <input type="email" placeholder="Email" name="email" ng-model="ctrl.user.email" required="required"/>
+                </div>
+                <div ng-messages="ctrl.form.email.$error" ng-if="ctrl.form.email.$touched || ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your email address</div>
+                    <div ng-message="email" class="ui red pointing prompt label transition visible">The email entered is not valid</div>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label>Real Name</label>
+                <div class="ui input">
+                    <input type="text" placeholder="Your real name" name="name" ng-model="ctrl.user.name" required="required"/>
+                </div>
+                <div ng-messages="ctrl.form.name.$error" ng-if="ctrl.form.name.$touched || ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your real name</div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Birthday</label>
+                <div class="ui grid three column">
+                    <div id="day" class="column">
+                        <select class="ui search dropdown">
+                            <option value="">Day</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+
+                    <div id="month" class="column">
+                        <select class="ui search dropdown">
+                            <option value="">Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+
+                    <div id="year" class="column">
+                        <select class="ui search dropdown">
+                            <option value="">Year</option>
+                            <option value="2010">2010</option>
+                            <option value="2009">2009</option>
+                            <option value="2008">2008</option>
+                            <option value="2007">2007</option>
+                            <option value="2006">2006</option>
+                            <option value="2005">2005</option>
+                            <option value="2004">2004</option>
+                            <option value="2003">2003</option>
+                            <option value="2002">2002</option>
+                            <option value="2001">2001</option>
+                            <option value="2000">2000</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Website</label>
+                <div class="ui input">
+                    <input type="url" placeholder="Website" name="website" ng-model="ctrl.user.website"/>
+                </div>
+                <div ng-messages="ctrl.form.website.$error" ng-if="ctrl.form.website.$touched || ctrl.form.submitted">
+                    <div ng-message="url" class="ui red pointing prompt label transition visible">Please enter a valid link</div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Location</label>
+                <div class="ui input">
+                    <input type="text" placeholder="Location" name="location" ng-model="ctrl.user.location"/>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>About Me</label>
+                <div class="ui input">
+                    <textarea name="location" ng-model="ctrl.user.bio"></textarea>
+                </div>
+            </div>
+
+            <button type="button" ng-click="ctrl.update(ctrl.user)" class="ui submit button">Save Changes</button>
+        </form>
+    </div>
+
+    <div ng-controller="PasswordResetCtrl as ctrl" class="five wide column">
+
+        <h3 class="ui header dividing">Change Password</h3>
+
+        <form name="ctrl.form" novalidate="novalidate" class="ui form">
+
+            <div class="field required">
+                <label>Old Password</label>
+                <div class="ui input">
+                    <input type="password" placeholder="Old Password" name="oldPassword" ng-model="ctrl.data.oldPassword" required="required"/>
+                </div>
+                <div ng-messages="ctrl.form.oldPassword.$error" ng-if="ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your old password</div>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label>New Password</label>
+                <div class="ui input">
+                    <input type="password" placeholder="New Password" name="newPassword" ng-model="ctrl.data.newPassword" required="required" minlength="5"/>
+                </div>
+                <div ng-messages="ctrl.form.newPassword.$error" ng-if="ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter a new address</div>
+                    <div ng-message="minlength" class="ui red pointing prompt label transition visible">The password is too short (Minimum 5 characters required)</div>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label>Confirm New Password</label>
+                <div class="ui input">
+                    <input type="password" placeholder="Confirm New Password" name="confirmPassword" ng-model="ctrl.data.confirmPassword" required="required"/>
+                </div>
+                <div ng-messages="ctrl.form.confirmPassword.$error" ng-if="ctrl.form.submitted">
+                    <div ng-message="required" class="ui red pointing prompt label transition visible">Password & confirm password doesn't match</div>
+                </div>
+            </div>
+
+            <button type="button" ng-click="ctrl.changePassword(ctrl.data)" class="ui submit button">Change Password</button>
+        </form>
+    </div>
+</div>

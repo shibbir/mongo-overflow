@@ -1,5 +1,12 @@
-<div>
-    <div class="ui.grid">
+<h2 class="ui dividing header">Tags</h2>
+
+<p>
+    A tag is a keyword or label that categorizes your question with other, similar questions.
+    Using the right tags makes it easier for others to find and answer your question.
+</p>
+
+<div ng-controller="TagListCtrl as ctrl">
+    <div class="ui grid">
         <div class="column">
             <div class="ui form">
                 <div class="field inline">
@@ -9,10 +16,12 @@
             </div>
         </div>
     </div>
+
     <br />
+
     <div id="tags-container">
         <div class="ui four column grid">
-            <div ng-repeat="tag in tags | filter: searchTag" class="column">
+            <div ng-repeat="tag in ctrl.tags | filter: searchTag" class="column">
                 <div class="ui fluid card">
                     <div class="content">
                         <a class="header" ng-href="/questions?tag={{tag.name}}">{{ tag.name }}</a>
@@ -34,12 +43,12 @@
                 </div>
             </div>
         </div>
-        <div ng-if="pages.length" class="text-right">
+        <div ng-if="ctrl.pages.length" class="text-right">
             <br />
             <br />
             <div class="ui pagination menu">
                 <a class="item"
-                   ng-repeat="page in pages"
+                   ng-repeat="page in ctrl.pages"
                    ng-class="{ active: page.active }"
                    ng-href="{{ page.href }}">{{ $index + 1 }}
                 </a>

@@ -3,8 +3,8 @@
 
     app.factory("tagService", ["httpService", "configuration", function(httpService, configuration) {
 
-        var getTags = function() {
-            return httpService.get(configuration.getBaseApiUrl() + "tags");
+        var getTags = function(config) {
+            return httpService.get(configuration.getBaseApiUrl() + "tags", config);
         };
 
         return {

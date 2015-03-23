@@ -19,6 +19,7 @@
 
             this.initPagination = function(pagination) {
                 ctrl.pages = [];
+
                 for(var idx = 1; idx <= pagination.pages; idx++) {
                     ctrl.pages.push({
                         href: "/#/questions?page=" + idx,

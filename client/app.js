@@ -59,6 +59,10 @@
                 templateUrl: "/question/details.html",
                 controller: "QuestionDetailsCtrl"
             })
+            .when("/tags", {
+                templateUrl: "/tag/list.html",
+                controller: "TagListCtrl"
+            })
             .otherwise({ redirectTo: "/" });
         }
     ]);
