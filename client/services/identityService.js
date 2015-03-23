@@ -50,6 +50,10 @@
             return httpService.get(configuration.getBaseApiUrl() + "oauth/user", config);
         };
 
+        var isLoggedIn = function() {
+            return getAccessToken() && getAccessToken();
+        };
+
         return {
             getLoggedInUser: getLoggedInUser,
             saveLoggedInUser: saveLoggedInUser,
@@ -57,7 +61,8 @@
             getAccessToken: getAccessToken,
             saveAccessToken: saveAccessToken,
             clearAccessToken: clearAccessToken,
-            getUserByToken: getUserByToken
+            getUserByToken: getUserByToken,
+            isLoggedIn: isLoggedIn
         };
     }]);
 })(angular.module("mongoOverflow"));

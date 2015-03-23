@@ -34,14 +34,30 @@
                 templateUrl: "/account/login.html",
                 controller: "LoginCtrl"
             })
+            .when("/users/:id", {
+                templateUrl: "/user/profile.html",
+                controller: "ProfileCtrl"
+            })
+            .when("/users/:id/edit", {
+                templateUrl: "/user/edit.html",
+                controller: "ProfileEditCtrl"
+            })
             .when("/register", {
                 templateUrl: "/account/register.html",
                 controller: "RegistrationCtrl"
+            })
+            .when("/questions", {
+                templateUrl: "/question/list.html",
+                controller: "QuestionListCtrl"
             })
             .when("/questions/ask", {
                 templateUrl: "/question/add.html",
                 controller: "QuestionAddCtrl",
                 resolve: resolve
+            })
+            .when("/questions/:id", {
+                templateUrl: "/question/details.html",
+                controller: "QuestionDetailsCtrl"
             })
             .otherwise({ redirectTo: "/" });
         }

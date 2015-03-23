@@ -1,53 +1,53 @@
-<div id="question">
-    <h2 class="ui dividing header" ng-bind="question.title"></h2>
+<div id="question" ng-controller="QuestionDetailsCtrl as ctrl">
+    <h2 class="ui dividing header" ng-bind="ctrl.question.title"></h2>
 
     <div class="ui grid">
         <div class="one wide column">
             <div class="ui grid text-center">
                 <div class="sixteen wide column" style="padding-bottom: 0">
                     <a href="javascript:void(0)" title="This question shows research effort; it is useful and clear"
-                        ng-class="question.upVoted ? 'vote-up-on' : 'vote-up-off'" ng-click="voteUp(question)">
+                        ng-class="ctrl.question.upVoted ? 'vote-up-on' : 'vote-up-off'" ng-click="ctrl.voteUp(ctrl.question)">
                         <i class="chevron circle up icon"></i>
                     </a>
                 </div>
                 <div class="sixteen wide column vote-count">
-                    <span ng-bind="question.upVotes.length - question.downVotes.length"></span>
+                    <span ng-bind="ctrl.question.upVotes.length - ctrl.question.downVotes.length"></span>
                 </div>
                 <div class="sixteen wide column" style="padding-bottom: 0;">
                     <a href="javascript:void(0)" title="This question does not show any research effort; it is unclear or not useful"
-                        ng-class="question.downVoted ? 'vote-down-on' : 'vote-down-off'" ng-click="voteDown(question)">
+                        ng-class="ctrl.question.downVoted ? 'vote-down-on' : 'vote-down-off'" ng-click="ctrl.voteDown(ctrl.question)">
                         <i class="chevron circle down icon"></i>
                     </a>
                 </div>
                 <div class="sixteen wide column">
                     <a href="javascript:void(0)" title="This is a favorite question (click again to undo)"
-                        ng-class="question.favorite ? 'favorite-on' : 'favorite-off'" ng-click="toggleFavorite(question)">
-                        <i class="star icon" ng-class="{ empty: !question.favorite, yellow: question.favorite }"></i>
+                        ng-class="ctrl.question.favorite ? 'favorite-on' : 'favorite-off'" ng-click="ctrl.toggleFavorite(ctrl.question)">
+                        <i class="star icon" ng-class="{ empty: !ctrl.question.favorite, yellow: ctrl.question.favorite }"></i>
                     </a>
                 </div>
             </div>
         </div>
         <div class="ten wide column">
-            <div class="question-description-container" ng-bind="question.description"></div>
-            <div class="tag-container" ng-if="question.tags.length">
-                <span ng-repeat="tag in question.tags">
+            <div class="question-description-container" ng-bind="ctrl.question.description"></div>
+            <div class="tag-container" ng-if="ctrl.question.tags.length">
+                <span ng-repeat="tag in ctrl.question.tags">
                     <a class="ui green tag label" ng-href="/tags/{{tag._id}}">{{ tag.name }}</a>
                 </span>
             </div>
             <div class="ui grid" style="margin-bottom: 10px;">
                 <div class="ten wide column">
                     <a>Share</a> |
-                    <a ng-href="/questions/{{question._id}}/edit" title="Revise and improve this post">Edit</a> |
+                    <a ng-href="/questions/{{ctrl.question._id}}/edit" title="Revise and improve this post">Edit</a> |
                     <a>Close</a> |
                     <a>Delete</a> |
                     <a>Flag</a>
                 </div>
                 <div class="six wide column question-creator-container">
-                    <div>Asked <span ng-bind="question.date"></span></div>
-                    <a ng-href="/users/{{question.creator._id}}">{{ question.creator.name }}</a>
+                    <div>Asked <span ng-bind="ctrl.question.date"></span></div>
+                    <a ng-href="/users/{{ctrl.question.creator._id}}">{{ question.creator.name }}</a>
                 </div>
             </div>
-            <comments id="question._id" ng-if="question"></comments>
+            <comments id="ctrl.question._id" ng-if="ctrl.question"></comments>
         </div>
     </div>
 </div>

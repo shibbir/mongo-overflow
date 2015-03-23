@@ -1,17 +1,17 @@
 (function(app) {
     "use strict";
 
-    app.controller("AvatarUploadCtrl", ["fileService", "notifierService", "configService", function(fileService, notifierService, configService) {
+    app.controller("AvatarUploadCtrl", ["fileService", "notifierService", "configuration", function(fileService, notifierService, configuration) {
         this.uploadAvatar = function($files) {
             if($files && $files.length) {
                 var file = $files[0];
 
-                if(file.size > configService.imageUploadSize) {
+                if(file.size > configuration.getImageUploadSize()) {
                     notifierService.notifyError("Photo size is too large. Max upload size is 2MB.");
                 }
 
                 var uploadConfig = {
-                    url: configService.baseApiUrl + "users/changeAvatar",
+                    url: configuration.getBaseApiUrl() + "users/changeAvatar",
                     method: "PATCH",
                     file: file
                 };
@@ -24,8 +24,8 @@
         };
     }]);
 
-    app.controller("ProfileEditCtrl", ["httpService", "$timeout", "notifierService", "configService",
-        function(httpService, $timeout, notifierService, configService) {
+    app.controller("ProfileEditCtrl", ["httpService", "$timeout", "notifierService", "configuration",
+        function(httpService, $timeout, notifierService, configuration) {
         var ctrl = this;
 
         this.form = this.form || {};
@@ -61,7 +61,7 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.patch(configService.baseApiUrl + "users/" + user._id, user).success(function() {
+                httpService.patch(configuration.getBaseApiUrl + "users/" + user._id, user).success(function() {
                     notifierService.notifySuccess("Information Updated!");
                 });
             }
@@ -72,7 +72,7 @@
         });
     }]);
 
-    app.controller("PasswordResetCtrl", ["httpService", "notifierService", "configService", function(httpService, notifierService, configService) {
+    app.controller("PasswordResetCtrl", ["httpService", "notifierService", "configuration", function(httpService, notifierService, configuration) {
         this.form = this.form || {};
         this.data = {};
         var ctrl = this;
@@ -81,7 +81,7 @@
             this.form.submitted = true;
 
             if(this.form.$valid) {
-                httpService.patch(configService.baseApiUrl + "users/changePassword", this.data).success(function() {
+                httpService.patch(configuration.getBaseApiUrl + "users/changePassword", this.data).success(function() {
                     notifierService.notifySuccess("Password Updated!");
                     ctrl.data = {};
                     delete ctrl.form.submitted;

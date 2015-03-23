@@ -1,20 +1,20 @@
-<div>
+<div ng-controller="ProfileCtrl as ctrl">
     <div class="ui dividing header">
         <div class="ui grid">
-            <div class="six wide column" ng-bind="profile.displayName"></div>
+            <div class="six wide column" ng-bind="ctrl.profile.displayName"></div>
             <div class="right floated six wide column text-right">
-                <a ng-href="/users/{{ profile._id }}/edit">Edit</a>
+                <a ng-href="/#/users/{{ ctrl.profile._id }}/edit">Edit</a>
                 |
-                <a ng-href="/users/{{ profile._id }}/privileges">Privileges</a>
+                <a ng-href="/#/users/{{ ctrl.profile._id }}/privileges">Privileges</a>
                 |
-                <a ng-href="/users/{{ profile._id }}/preferences ">Preferences </a>
+                <a ng-href="/#/users/{{ ctrl.profile._id }}/preferences ">Preferences </a>
             </div>
         </div>
     </div>
 
     <div class="ui grid">
         <div class="three wide column">
-            <img class="ui image" alt="Profile Picture" ng-src="{{ profile.avatar }}" src="/assets/images/avatar.png" />
+            <img class="ui image" alt="Profile Picture" ng-src="{{ ctrl.profile.avatar }}" src="/assets/images/avatar.png" />
         </div>
         <div class="five wide column">
             <div class="ui divided list">
@@ -22,9 +22,9 @@
                     <div class="content">
                         <a class="header">Bio</a>
                         <div class="description">
-                            <div>Website: <a ng-href="{{ profile.website }}">{{ profile.website }}</a></div>
-                            <div>Location: <span ng-bind="profile.location"></span></div>
-                            <div>Age: <span ng-bind="profile.age"></span></div>
+                            <div>Website: <a ng-href="{{ ctrl.profile.website }}">{{ ctrl.profile.website }}</a></div>
+                            <div>Location: <span ng-bind="ctrl.profile.location"></span></div>
+                            <div>Age: <span ng-bind="ctrl.profile.age"></span></div>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="content">
                         <a class="header">Visits</a>
                         <div class="description">
-                            Member Since: {{ profile.date }}
+                            Member Since: {{ ctrl.profile.date }}
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="content">
                         <a class="header">Stats</a>
                         <div class="description">
-                            Profile views: {{ profile.views.length }}
+                            Profile views: {{ ctrl.profile.views.length }}
                         </div>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
                     <div class="content">
                         <a class="header">Private</a>
                         <div class="description">
-                            <div>Email: {{ profile.email }}</div>
-                            <div>Real Name: {{ profile.name }}</div>
+                            <div>Email: {{ ctrl.profile.email }}</div>
+                            <div>Real Name: {{ ctrl.profile.name }}</div>
                         </div>
                     </div>
                 </div>
