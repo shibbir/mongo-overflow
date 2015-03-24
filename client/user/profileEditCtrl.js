@@ -15,6 +15,8 @@
                     userService.changeAvatar($routeParams.id, file).progress(function (evt) {
                     }).success(function () {
                         notifierService.notifySuccess("Profile picture updated!");
+                    }).error(function() {
+                        notifierService.notifyError("Something happened. Please try again.");
                     });
                 }
             };
@@ -56,9 +58,33 @@
             this.update = function(user) {
                 this.form.submitted = true;
 
-                if(this.form.$valid) {
+                var months = [
+                    "january", "february", "march", "april",
+                    "may", "june", "july", "august", "september",
+                    "october", "november", "december"
+                ];
+
+                var day = $("#day .text").text(),
+                    month = _.indexOf(months, $("#month .text").text().toLowerCase()) + 1,
+                    year = $("#year .text").text();
+
+                if(moment(day + "/" + month + "/" + year).isValid()) {
+                    user.birthday = {
+                        day: day,
+                        month: month,
+                        year: year
+                    };
+
+                    delete ctrl.showBirthdayValidationError;
+                } else {
+                    ctrl.showBirthdayValidationError = true;
+                }
+
+                if(this.form.$valid && moment(day + "/" + month + "/" + year).isValid()) {
                     userService.update(user._id, user).success(function() {
                         notifierService.notifySuccess("Information Updated!");
+                    }).error(function() {
+                        notifierService.notifyError("Something happened. Please try again.");
                     });
                 }
             };

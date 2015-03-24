@@ -39,7 +39,7 @@
                 controller: "ProfileCtrl"
             })
             .when("/users/:id/edit", {
-                templateUrl: "/user/edit.html",
+                templateUrl: "/user/profile-edit.html",
                 controller: "ProfileEditCtrl"
             })
             .when("/register", {

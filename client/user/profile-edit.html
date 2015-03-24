@@ -124,6 +124,9 @@
                         </select>
                     </div>
                 </div>
+                <div ng-if="ctrl.showBirthdayValidationError && ctrl.form.submitted">
+                    <div class="ui red pointing prompt label transition visible">Please select a valid day, month and year</div>
+                </div>
             </div>
 
             <div class="field">
