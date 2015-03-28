@@ -1,29 +1,29 @@
 <h2 class="ui dividing header">Registered User</h2>
 
-<div class="ui grid">
+<div class="ui grid" ng-controller="ProfileEditCtrl as profileCtrl">
 
-    <div ng-controller="AvatarUploadCtrl as ctrl" class="three wide column">
+    <div class="three wide column">
 
-        <img src="/assets/images/avatar.png" alt="Profile Picture" ng-src="{{ ctrl.user.avatar }}" class="ui image" />
+        <img src="/assets/images/avatar.png" alt="Profile Picture" ng-src="{{ profileCtrl.user.avatar.absolutePath }}" class="ui image" />
 
         <br/>
 
         <label for="file" class="ui button"><span>Change Picture</span></label>
         <input id="file" type="file" style="display:none;" multiple="multiple" accept="image/*"
                ng-file-select
-               ng-file-change="ctrl.uploadAvatar($files)" />
+               ng-file-change="profileCtrl.uploadAvatar($files)" />
     </div>
 
-    <div ng-controller="ProfileEditCtrl as ctrl" class="six wide column">
+    <div class="six wide column">
 
-        <form name="ctrl.form" novalidate="novalidate" class="ui form">
+        <form name="profileCtrl.form" novalidate="novalidate" class="ui form">
 
             <div class="field required">
                 <label>Display Name</label>
                 <div class="ui input">
-                    <input type="text" placeholder="Your public display name" name="displayName" ng-model="ctrl.user.displayName" required="required"/>
+                    <input type="text" placeholder="Your public display name" name="displayName" ng-model="profileCtrl.user.displayName" required="required"/>
                 </div>
-                <div ng-messages="ctrl.form.displayName.$error" ng-if="ctrl.form.displayName.$touched || ctrl.form.submitted">
+                <div ng-messages="profileCtrl.form.displayName.$error" ng-if="profileCtrl.form.displayName.$touched || profileCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your display name</div>
                 </div>
             </div>
@@ -31,9 +31,9 @@
             <div class="field required">
                 <label>Email</label>
                 <div class="ui input">
-                    <input type="email" placeholder="Email" name="email" ng-model="ctrl.user.email" required="required"/>
+                    <input type="email" placeholder="Email" name="email" ng-model="profileCtrl.user.email" required="required"/>
                 </div>
-                <div ng-messages="ctrl.form.email.$error" ng-if="ctrl.form.email.$touched || ctrl.form.submitted">
+                <div ng-messages="profileCtrl.form.email.$error" ng-if="profileCtrl.form.email.$touched || profileCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your email address</div>
                     <div ng-message="email" class="ui red pointing prompt label transition visible">The email entered is not valid</div>
                 </div>
@@ -42,9 +42,9 @@
             <div class="field required">
                 <label>Real Name</label>
                 <div class="ui input">
-                    <input type="text" placeholder="Your real name" name="name" ng-model="ctrl.user.name" required="required"/>
+                    <input type="text" placeholder="Your real name" name="name" ng-model="profileCtrl.user.name" required="required"/>
                 </div>
-                <div ng-messages="ctrl.form.name.$error" ng-if="ctrl.form.name.$touched || ctrl.form.submitted">
+                <div ng-messages="profileCtrl.form.name.$error" ng-if="profileCtrl.form.name.$touched || profileCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your real name</div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                         </select>
                     </div>
                 </div>
-                <div ng-if="ctrl.showBirthdayValidationError && ctrl.form.submitted">
+                <div ng-if="profileCtrl.showBirthdayValidationError && profileCtrl.form.submitted">
                     <div class="ui red pointing prompt label transition visible">Please select a valid day, month and year</div>
                 </div>
             </div>
@@ -132,9 +132,9 @@
             <div class="field">
                 <label>Website</label>
                 <div class="ui input">
-                    <input type="url" placeholder="Website" name="website" ng-model="ctrl.user.website"/>
+                    <input type="url" placeholder="Website" name="website" ng-model="profileCtrl.user.website"/>
                 </div>
-                <div ng-messages="ctrl.form.website.$error" ng-if="ctrl.form.website.$touched || ctrl.form.submitted">
+                <div ng-messages="profileCtrl.form.website.$error" ng-if="profileCtrl.form.website.$touched || profileCtrl.form.submitted">
                     <div ng-message="url" class="ui red pointing prompt label transition visible">Please enter a valid link</div>
                 </div>
             </div>
@@ -142,33 +142,33 @@
             <div class="field">
                 <label>Location</label>
                 <div class="ui input">
-                    <input type="text" placeholder="Location" name="location" ng-model="ctrl.user.location"/>
+                    <input type="text" placeholder="Location" name="location" ng-model="profileCtrl.user.location"/>
                 </div>
             </div>
 
             <div class="field">
                 <label>About Me</label>
                 <div class="ui input">
-                    <textarea name="location" ng-model="ctrl.user.bio"></textarea>
+                    <textarea name="location" ng-model="profileCtrl.user.bio"></textarea>
                 </div>
             </div>
 
-            <button type="button" ng-click="ctrl.update(ctrl.user)" class="ui submit button">Save Changes</button>
+            <button type="button" ng-click="profileCtrl.update(profileCtrl.user)" class="ui submit button">Save Changes</button>
         </form>
     </div>
 
-    <div ng-controller="PasswordResetCtrl as ctrl" class="five wide column">
+    <div ng-controller="PasswordResetCtrl as paaswordCtrl" class="five wide column">
 
         <h3 class="ui header dividing">Change Password</h3>
 
-        <form name="ctrl.form" novalidate="novalidate" class="ui form">
+        <form name="paaswordCtrl.form" novalidate="novalidate" class="ui form">
 
             <div class="field required">
                 <label>Old Password</label>
                 <div class="ui input">
-                    <input type="password" placeholder="Old Password" name="oldPassword" ng-model="ctrl.data.oldPassword" required="required"/>
+                    <input type="password" placeholder="Old Password" name="oldPassword" ng-model="paaswordCtrl.data.oldPassword" required="required"/>
                 </div>
-                <div ng-messages="ctrl.form.oldPassword.$error" ng-if="ctrl.form.submitted">
+                <div ng-messages="paaswordCtrl.form.oldPassword.$error" ng-if="paaswordCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter your old password</div>
                 </div>
             </div>
@@ -176,9 +176,9 @@
             <div class="field required">
                 <label>New Password</label>
                 <div class="ui input">
-                    <input type="password" placeholder="New Password" name="newPassword" ng-model="ctrl.data.newPassword" required="required" minlength="5"/>
+                    <input type="password" placeholder="New Password" name="newPassword" ng-model="paaswordCtrl.data.newPassword" required="required" minlength="5"/>
                 </div>
-                <div ng-messages="ctrl.form.newPassword.$error" ng-if="ctrl.form.submitted">
+                <div ng-messages="paaswordCtrl.form.newPassword.$error" ng-if="paaswordCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Please enter a new address</div>
                     <div ng-message="minlength" class="ui red pointing prompt label transition visible">The password is too short (Minimum 5 characters required)</div>
                 </div>
@@ -187,14 +187,14 @@
             <div class="field required">
                 <label>Confirm New Password</label>
                 <div class="ui input">
-                    <input type="password" placeholder="Confirm New Password" name="confirmPassword" ng-model="ctrl.data.confirmPassword" required="required"/>
+                    <input type="password" placeholder="Confirm New Password" name="confirmPassword" ng-model="paaswordCtrl.data.confirmPassword" required="required"/>
                 </div>
-                <div ng-messages="ctrl.form.confirmPassword.$error" ng-if="ctrl.form.submitted">
+                <div ng-messages="paaswordCtrl.form.confirmPassword.$error" ng-if="paaswordCtrl.form.submitted">
                     <div ng-message="required" class="ui red pointing prompt label transition visible">Password & confirm password doesn't match</div>
                 </div>
             </div>
 
-            <button type="button" ng-click="ctrl.changePassword(ctrl.data)" class="ui submit button">Change Password</button>
+            <button type="button" ng-click="paaswordCtrl.changePassword(paaswordCtrl.data)" class="ui submit button">Change Password</button>
         </form>
     </div>
 </div>

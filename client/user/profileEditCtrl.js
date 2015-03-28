@@ -1,30 +1,8 @@
 (function(app) {
     "use strict";
 
-    app.controller("AvatarUploadCtrl", ["userService", "notifierService", "configuration", "$routeParams",
-        function(userService, notifierService, configuration, $routeParams) {
-
-            this.uploadAvatar = function($files) {
-                if($files && $files.length) {
-                    var file = $files[0];
-
-                    if(file.size > configuration.getImageUploadSize()) {
-                        notifierService.notifyError("Photo size is too large. Max upload size is 2MB.");
-                    }
-
-                    userService.changeAvatar($routeParams.id, file).progress(function (evt) {
-                    }).success(function () {
-                        notifierService.notifySuccess("Profile picture updated!");
-                    }).error(function() {
-                        notifierService.notifyError("Something happened. Please try again.");
-                    });
-                }
-            };
-        }
-    ]);
-
-    app.controller("ProfileEditCtrl", ["userService", "$timeout", "notifierService", "$routeParams",
-        function(userService, $timeout, notifierService, $routeParams) {
+    app.controller("ProfileEditCtrl", ["userService", "$timeout", "notifierService", "$routeParams", "configuration",
+        function(userService, $timeout, notifierService, $routeParams, configuration) {
             var ctrl = this;
 
             this.form = this.form || {};
@@ -54,6 +32,24 @@
                     }
                 });
             }();
+
+            this.uploadAvatar = function($files) {
+                if($files && $files.length) {
+                    var file = $files[0];
+
+                    if(file.size > configuration.getImageUploadSize()) {
+                        notifierService.notifyError("Photo size is too large. Max upload size is 2MB.");
+                    }
+
+                    userService.changeAvatar($routeParams.id, file).progress(function (evt) {
+                    }).success(function(data) {
+                        ctrl.user.avatar = data;
+                        notifierService.notifySuccess("Profile picture updated!");
+                    }).error(function() {
+                        notifierService.notifyError("Something happened. Please try again.");
+                    });
+                }
+            };
 
             this.update = function(user) {
                 this.form.submitted = true;

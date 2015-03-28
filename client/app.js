@@ -31,37 +31,29 @@
                 templateUrl: "/templates/home.html"
             })
             .when("/login", {
-                templateUrl: "/account/login.html",
-                controller: "LoginCtrl"
+                templateUrl: "/account/login.html"
             })
             .when("/users/:id", {
-                templateUrl: "/user/profile.html",
-                controller: "ProfileCtrl"
+                templateUrl: "/user/profile.html"
             })
             .when("/users/:id/edit", {
-                templateUrl: "/user/profile-edit.html",
-                controller: "ProfileEditCtrl"
+                templateUrl: "/user/profile-edit.html"
             })
             .when("/register", {
-                templateUrl: "/account/register.html",
-                controller: "RegistrationCtrl"
+                templateUrl: "/account/register.html"
             })
             .when("/questions", {
-                templateUrl: "/question/list.html",
-                controller: "QuestionListCtrl"
+                templateUrl: "/question/list.html"
             })
             .when("/questions/ask", {
                 templateUrl: "/question/add.html",
-                controller: "QuestionAddCtrl",
                 resolve: resolve
             })
             .when("/questions/:id", {
-                templateUrl: "/question/details.html",
-                controller: "QuestionDetailsCtrl"
+                templateUrl: "/question/details.html"
             })
             .when("/tags", {
-                templateUrl: "/tag/list.html",
-                controller: "TagListCtrl"
+                templateUrl: "/tag/list.html"
             })
             .otherwise({ redirectTo: "/" });
         }

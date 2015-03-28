@@ -5,11 +5,13 @@
         function(httpService, configuration, $timeout, $routeParams, $location, identityService) {
             var ctrl = this;
 
-            httpService.get(configuration.getBaseApiUrl() + "questions/" + $routeParams.id).success(function(data) {
-                ctrl.question = data;
-            }).error(function() {
-                $location.path("/");
-            });
+            this.init = function() {
+                httpService.get(configuration.getBaseApiUrl() + "questions/" + $routeParams.id).success(function(data) {
+                    ctrl.question = data;
+                }).error(function() {
+                    $location.path("/");
+                });
+            }();
 
             this.isLoggedIn = identityService.isLoggedIn();
 
@@ -43,7 +45,7 @@
 
             this.toggleFavorite = function(question) {
                 if(question.favorite) {
-                    httpService.remove(configuration.getBaseApiUrl() + "questions/" + question._id + "/favorite", null, config).success(function() {
+                    httpService.remove(configuration.getBaseApiUrl() + "questions/" + question._id + "/favorite", config).success(function() {
                         delete ctrl.question.favorite;
                     });
                 } else {
