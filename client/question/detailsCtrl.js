@@ -1,13 +1,13 @@
 (function(app) {
     "use strict";
 
-    app.controller("QuestionDetailsCtrl", ["httpService", "configuration", "$timeout", "$routeParams", "$location", "identityService",
-        function(httpService, configuration, $timeout, $routeParams, $location, identityService) {
+    app.controller("QuestionDetailsCtrl", ["httpService", "configuration", "$timeout", "$routeParams", "$location", "identityService", "questionService",
+        function(httpService, configuration, $timeout, $routeParams, $location, identityService, questionService) {
             var ctrl = this;
 
             this.init = function() {
                 httpService.get(configuration.getBaseApiUrl() + "questions/" + $routeParams.id).success(function(data) {
-                    ctrl.question = data;
+                    ctrl.question = questionService.formatQuestion(data);
                 }).error(function() {
                     $location.path("/");
                 });

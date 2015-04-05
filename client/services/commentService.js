@@ -3,11 +3,6 @@
 
     app.factory("commentService", [function() {
         var formatComment = function(comment) {
-            comment.commenter.profileLink = "/users/" + comment.commenter._id + "/" + _.kebabCase(comment.commenter.displayName);
-            if(comment.commenter.avatar) {
-                comment.commenter.avatar = "/uploads/" + comment.commenter.avatar;
-            }
-
             comment.date = moment(comment.date).calendar();
 
             return comment;

@@ -3,10 +3,10 @@
         <h3 class="ui dividing header">Comments</h3>
         <div class="comment" ng-repeat="comment in comments">
             <a class="avatar" ng-href="{{ comment.commenter.profileLink }}">
-                <img src="/assets/images/avatar.png" ng-src="{{ comment.commenter.avatar }}">
+                <img src="/assets/images/avatar.png" ng-src="{{ comment.commenter.avatar.absolutePath }}">
             </a>
             <div class="content">
-                <a ng-href="{{ comment.commenter.profileLink }}" class="author">{{ comment.commenter.displayName }}</a>
+                <a ng-href="#/users/{{comment.commenter._id}}" class="author">{{ comment.commenter.displayName }}</a>
                 <div class="metadata">
                     <span class="date" ng-bind="comment.date"></span>
                 </div>
